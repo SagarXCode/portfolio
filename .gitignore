@@ -1,0 +1,19 @@
+# Node modules and dependencies
+node_modules
+.pnp
+.pnp.js
+
+# Build output
+dist
+build
+
+# Environment variables (Crucial for security)
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# IDE and System files
+.vscode
+.DS_Store
+*.log
