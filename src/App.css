@@ -13,8 +13,17 @@
     --accent-soft: #e3f0ed;
     --bg-spot-1: #fdfbf8;
     --bg-spot-2: #edf5f2;
-    --topbar-bg: rgba(246, 243, 238, 0.84);
+    --topbar-bg: rgba(246, 243, 238, 0.64);
     --shadow-color: rgba(0, 0, 0, 0.55);
+    --cal-empty: #ebedf0;
+    --cal-level-1: #c6e48b;
+    --cal-level-2: #7bc96f;
+    --cal-level-3: #239a3b;
+    --cal-level-4: #196127;
+    --tooltip-bg: #1f2933;
+    --tooltip-text: #ffffff;
+    --cal-cell-size: 11px;
+    --cal-cell-gap: 3px;
     --max-width: 1080px;
 }
 
@@ -31,8 +40,15 @@
     --accent-soft: #21363c;
     --bg-spot-1: #19222d;
     --bg-spot-2: #152029;
-    --topbar-bg: rgba(16, 22, 29, 0.82);
+    --topbar-bg: rgba(16, 22, 29, 0.6);
     --shadow-color: rgba(0, 0, 0, 0.78);
+    --cal-empty: #253442;
+    --cal-level-1: #0f5132;
+    --cal-level-2: #18794e;
+    --cal-level-3: #2ea043;
+    --cal-level-4: #56d364;
+    --tooltip-bg: #e4ebf2;
+    --tooltip-text: #10161d;
 }
 
 * {
@@ -71,6 +87,7 @@ a {
     border-bottom: 1px solid var(--line);
     background: var(--topbar-bg);
     backdrop-filter: blur(10px);
+    box-shadow: 0 14px 30px -28px var(--shadow-color);
 }
 
 .topbar-inner {
@@ -115,6 +132,7 @@ a {
 }
 
 .topnav a {
+    display: inline-flex;
     color: var(--muted);
     font-size: 0.92rem;
     font-weight: 600;
@@ -126,22 +144,19 @@ a {
 }
 
 .theme-toggle {
-    width: 2.2rem;
-    height: 2.2rem;
-    border-radius: 999px;
-    border: 1px solid var(--line);
-    background: var(--surface-strong);
-    color: var(--text);
+    border: 0;
+    background: transparent;
+    color: var(--muted);
     display: inline-flex;
     align-items: center;
     justify-content: center;
+    padding: 0.1rem;
     cursor: pointer;
-    transition: background-color 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+    transition: color 0.2s ease;
 }
 
 .theme-toggle:hover {
-    border-color: var(--accent);
-    transform: translateY(-1px);
+    color: var(--text);
 }
 
 .theme-toggle:focus-visible {
@@ -150,8 +165,13 @@ a {
 }
 
 .theme-toggle svg {
-    width: 1.1rem;
-    height: 1.1rem;
+    width: 1.28rem;
+    height: 1.28rem;
+    transition: transform 0.22s ease;
+}
+
+.theme-toggle:hover svg {
+    transform: rotate(90deg);
 }
 
 .main-content {
@@ -373,6 +393,170 @@ a {
     border-radius: 8px;
 }
 
+.contribution-calendar-shell {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.calendar-summary {
+    margin: 0;
+    color: var(--muted);
+    font-size: 0.88rem;
+}
+
+.calendar-scroll {
+    overflow-x: auto;
+    overflow-y: visible;
+    padding-bottom: 0.25rem;
+}
+
+.calendar-inner {
+    min-width: fit-content;
+}
+
+.calendar-months {
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+    margin-bottom: 0.35rem;
+}
+
+.calendar-month-spacer {
+    width: 2rem;
+    flex: 0 0 2rem;
+}
+
+.calendar-month-track {
+    display: flex;
+    gap: var(--cal-cell-gap);
+}
+
+.calendar-month-label {
+    width: var(--cal-cell-size);
+    color: var(--muted);
+    font-size: 0.69rem;
+    white-space: nowrap;
+    letter-spacing: 0.03em;
+}
+
+.calendar-body {
+    display: flex;
+    gap: 0.45rem;
+}
+
+.calendar-weekday-labels {
+    width: 2rem;
+    flex: 0 0 2rem;
+    display: grid;
+    grid-template-rows: repeat(7, var(--cal-cell-size));
+    gap: var(--cal-cell-gap);
+}
+
+.calendar-weekday-labels span {
+    font-size: 0.67rem;
+    color: var(--muted);
+    line-height: var(--cal-cell-size);
+}
+
+.calendar-grid {
+    display: flex;
+    gap: var(--cal-cell-gap);
+}
+
+.calendar-week {
+    display: grid;
+    grid-template-rows: repeat(7, var(--cal-cell-size));
+    gap: var(--cal-cell-gap);
+}
+
+.calendar-cell {
+    width: var(--cal-cell-size);
+    height: var(--cal-cell-size);
+    border-radius: 2px;
+    background: var(--cal-empty);
+    border: 1px solid transparent;
+    display: block;
+    position: relative;
+}
+
+.calendar-cell.level-0 {
+    background: var(--cal-empty);
+}
+
+.calendar-cell.level-1 {
+    background: var(--cal-level-1);
+}
+
+.calendar-cell.level-2 {
+    background: var(--cal-level-2);
+}
+
+.calendar-cell.level-3 {
+    background: var(--cal-level-3);
+}
+
+.calendar-cell.level-4 {
+    background: var(--cal-level-4);
+}
+
+.calendar-cell.is-future {
+    opacity: 0.45;
+}
+
+.calendar-cell:hover {
+    border-color: rgba(255, 255, 255, 0.45);
+}
+
+.calendar-cell:hover::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    left: 50%;
+    bottom: calc(100% + 8px);
+    transform: translateX(-50%);
+    white-space: nowrap;
+    color: var(--tooltip-text);
+    background: var(--tooltip-bg);
+    border-radius: 6px;
+    padding: 0.22rem 0.42rem;
+    font-size: 0.72rem;
+    letter-spacing: 0.01em;
+    z-index: 12;
+    pointer-events: none;
+}
+
+.calendar-cell:hover::before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    bottom: calc(100% + 3px);
+    transform: translateX(-50%);
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-top: 5px solid var(--tooltip-bg);
+    z-index: 12;
+    pointer-events: none;
+}
+
+.calendar-legend {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    color: var(--muted);
+    font-size: 0.72rem;
+}
+
+.legend-scale {
+    display: inline-flex;
+    gap: 0.2rem;
+}
+
+.calendar-error {
+    margin: 0;
+    color: #b25252;
+    font-size: 0.82rem;
+}
+
 .contact-card {
     margin-top: 1.1rem;
     border: 1px solid var(--line);
@@ -431,9 +615,24 @@ a {
 }
 
 .back-to-top {
+    border: 0;
+    background: transparent;
+    padding: 0;
     color: var(--accent);
-    font-size: 0.88rem;
-    font-weight: 700;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.back-to-top svg {
+    width: 1.22rem;
+    height: 1.22rem;
+    transition: transform 0.2s ease;
+}
+
+.back-to-top:hover svg {
+    transform: translateY(-2px);
 }
 
 .reveal {
@@ -465,6 +664,16 @@ a {
     .github-card.wide {
         grid-column: auto;
     }
+
+    .calendar-month-spacer,
+    .calendar-weekday-labels {
+        width: 1.4rem;
+        flex-basis: 1.4rem;
+    }
+
+    .calendar-weekday-labels span {
+        font-size: 0.63rem;
+    }
 }
 
 @media (max-width: 700px) {
@@ -490,4 +699,12 @@ a {
         flex-direction: column;
         align-items: flex-start;
     }
+}
+
+.reveal-button {
+    animation-duration: 0.58s;
+}
+
+.nav-link-reveal {
+    animation-duration: 0.52s;
 }

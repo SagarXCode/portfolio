@@ -15,16 +15,27 @@ export default function Navbar({ theme, onToggleTheme }) {
   return (
     <header className="topbar">
       <div className="topbar-inner">
-        <button type="button" className="brand brand-button" onClick={handleBrandClick}>
+        <button
+          type="button"
+          className="brand brand-button reveal reveal-button"
+          style={{ animationDelay: '0.04s' }}
+          onClick={handleBrandClick}
+        >
           Sagar Maurya
         </button>
 
         <div className="topbar-right">
           <nav aria-label="Primary">
             <ul className="topnav">
-              {links.map((link) => (
+              {links.map((link, index) => (
                 <li key={link.href}>
-                  <a href={link.href}>{link.label}</a>
+                  <a
+                    href={link.href}
+                    className="reveal nav-link-reveal"
+                    style={{ animationDelay: `${0.08 + index * 0.05}s` }}
+                  >
+                    {link.label}
+                  </a>
                 </li>
               ))}
             </ul>
@@ -32,7 +43,8 @@ export default function Navbar({ theme, onToggleTheme }) {
 
           <button
             type="button"
-            className="theme-toggle"
+            className="theme-toggle reveal reveal-button"
+            style={{ animationDelay: '0.29s' }}
             onClick={onToggleTheme}
             aria-label={`Switch to ${nextTheme} mode`}
             title={`Switch to ${nextTheme} mode`}
