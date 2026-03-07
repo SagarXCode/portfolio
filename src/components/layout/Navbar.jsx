@@ -28,12 +28,12 @@ export default function Navbar({ theme, onToggleTheme }) {
           <nav aria-label="Primary">
             <ul className="topnav">
               {links.map((link, index) => (
-                <li key={link.href}>
-                  <a
-                    href={link.href}
-                    className="reveal nav-link-reveal"
-                    style={{ animationDelay: `${0.08 + index * 0.05}s` }}
-                  >
+                <li
+                  key={link.href}
+                  className="reveal"
+                  style={{ animationDelay: `${0.12 + index * 0.08}s` }}
+                >
+                  <a href={link.href}>
                     {link.label}
                   </a>
                 </li>
