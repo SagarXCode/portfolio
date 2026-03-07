@@ -22,8 +22,8 @@
     --cal-level-4: #196127;
     --tooltip-bg: #1f2933;
     --tooltip-text: #ffffff;
-    --cal-cell-size: 11px;
-    --cal-cell-gap: 3px;
+    --cal-cell-size: 9px;
+    --cal-cell-gap: 2px;
     --max-width: 1080px;
 }
 
@@ -396,11 +396,14 @@ a {
 }
 
 .github-card.stats-card {
-    max-width: 540px;
+    max-width: 460px;
 }
 
 .github-card.wide {
     grid-column: 1 / -1;
+    width: 100%;
+    max-width: 860px;
+    justify-self: center;
 }
 
 .github-image-wrap {
@@ -409,6 +412,7 @@ a {
     background: var(--surface-strong);
     overflow: hidden;
     padding: 0.35rem;
+    max-width: 420px;
 }
 
 .github-image {
@@ -450,8 +454,8 @@ a {
 }
 
 .calendar-month-spacer {
-    width: 2rem;
-    flex: 0 0 2rem;
+    width: 1.7rem;
+    flex: 0 0 1.7rem;
 }
 
 .calendar-month-track {
@@ -473,8 +477,8 @@ a {
 }
 
 .calendar-weekday-labels {
-    width: 2rem;
-    flex: 0 0 2rem;
+    width: 1.7rem;
+    flex: 0 0 1.7rem;
     display: grid;
     grid-template-rows: repeat(7, var(--cal-cell-size));
     gap: var(--cal-cell-gap);
@@ -694,8 +698,8 @@ a {
 
     .calendar-month-spacer,
     .calendar-weekday-labels {
-        width: 1.4rem;
-        flex-basis: 1.4rem;
+        width: 1.2rem;
+        flex-basis: 1.2rem;
     }
 
     .calendar-weekday-labels span {

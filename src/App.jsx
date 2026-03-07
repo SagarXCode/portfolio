@@ -154,12 +154,9 @@ function App() {
               <p>Open to software developer opportunities, internships, and collaborations.</p>
             </div>
             <div className="contact-links">
-              <a className="text-link reveal reveal-button" style={{ animationDelay: '0.06s' }} href="mailto:hello@sagar.dev">
-                hello@sagar.dev
-              </a>
               <a
                 className="text-link reveal reveal-button"
-                style={{ animationDelay: '0.12s' }}
+                style={{ animationDelay: '0.06s' }}
                 href="https://github.com/SagarXCode"
                 target="_blank"
                 rel="noreferrer"

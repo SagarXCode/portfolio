@@ -5,6 +5,34 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Portfolio</title>
+  <style>
+    html,
+    body {
+      background-color: #f6f3ee;
+    }
+
+    html[data-theme='dark'],
+    html[data-theme='dark'] body {
+      background-color: #10161d;
+    }
+  </style>
+  <script>
+    (function setInitialTheme() {
+      try {
+        var savedTheme = window.localStorage.getItem('theme');
+        var theme =
+          savedTheme === 'light' || savedTheme === 'dark'
+            ? savedTheme
+            : window.matchMedia('(prefers-color-scheme: dark)').matches
+              ? 'dark'
+              : 'light';
+
+        document.documentElement.setAttribute('data-theme', theme);
+      } catch (error) {
+        document.documentElement.setAttribute('data-theme', 'light');
+      }
+    })();
+  </script>
 </head>
 
 <body>
