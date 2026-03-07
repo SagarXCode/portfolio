@@ -21,7 +21,8 @@ export default function Navbar({ theme, onToggleTheme }) {
 
     const topbar = document.querySelector('.topbar');
     const topbarHeight = topbar instanceof HTMLElement ? topbar.offsetHeight : 0;
-    const visualOffset = Math.round(window.innerHeight * 0.12);
+    const offsetFactor = href === '#projects' ? 0.24 : 0.2;
+    const visualOffset = Math.min(240, Math.max(92, Math.round(window.innerHeight * offsetFactor)));
     const sectionTop = targetSection.getBoundingClientRect().top + window.scrollY;
     const targetTop = Math.max(0, sectionTop - topbarHeight - visualOffset);
 
