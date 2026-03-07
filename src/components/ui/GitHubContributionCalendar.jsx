@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { GitHubCalendar } from 'react-github-calendar';
 
 const calendarTheme = {
@@ -14,34 +14,37 @@ const getColorScheme = () => {
   return document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'light';
 };
 
-const getCalendarSize = () => {
-  if (typeof window === 'undefined') {
-    return { blockSize: 10, blockMargin: 3, fontSize: 12, showWeekdayLabels: true };
+const clamp = (value, min, max) => Math.min(max, Math.max(min, value));
+
+const getCalendarSize = (containerWidth) => {
+  const width = Math.max(220, containerWidth || 0);
+  const compactMode = width < 640;
+  const showWeekdayLabels = !compactMode;
+  const showMonthLabels = width >= 360;
+  const blockMargin = width < 760 ? 1 : 2;
+
+  const horizontalReservedSpace = showWeekdayLabels ? 32 : 8;
+  const usableWidth = Math.max(240, width - horizontalReservedSpace);
+  const rawBlockSize = Math.floor(usableWidth / 53) - blockMargin;
+  const blockSize = clamp(rawBlockSize, 3, 10);
+
+  let fontSize = 12;
+  if (width < 420) {
+    fontSize = 9;
+  } else if (width < 700) {
+    fontSize = 10;
+  } else if (width < 980) {
+    fontSize = 11;
   }
 
-  const viewportWidth = window.innerWidth;
-  if (viewportWidth <= 420) {
-    return { blockSize: 4, blockMargin: 1, fontSize: 9, showWeekdayLabels: false };
-  }
-
-  if (viewportWidth <= 560) {
-    return { blockSize: 5, blockMargin: 1, fontSize: 10, showWeekdayLabels: false };
-  }
-
-  if (viewportWidth <= 700) {
-    return { blockSize: 6, blockMargin: 1, fontSize: 10, showWeekdayLabels: true };
-  }
-
-  if (viewportWidth <= 980) {
-    return { blockSize: 8, blockMargin: 2, fontSize: 11, showWeekdayLabels: true };
-  }
-
-  return { blockSize: 10, blockMargin: 3, fontSize: 12, showWeekdayLabels: true };
+  return { blockSize, blockMargin, fontSize, showWeekdayLabels, showMonthLabels };
 };
 
 export default function GitHubContributionCalendar({ username }) {
   const [colorScheme, setColorScheme] = useState(getColorScheme);
-  const [calendarSize, setCalendarSize] = useState(getCalendarSize);
+  const [containerWidth, setContainerWidth] = useState(0);
+  const widgetRef = useRef(null);
+  const calendarSize = useMemo(() => getCalendarSize(containerWidth), [containerWidth]);
 
   useEffect(() => {
     const root = document.documentElement;
@@ -60,21 +63,29 @@ export default function GitHubContributionCalendar({ username }) {
   }, []);
 
   useEffect(() => {
-    const updateCalendarSize = () => {
-      setCalendarSize(getCalendarSize());
+    const element = widgetRef.current;
+    if (!element) {
+      return undefined;
+    }
+
+    const updateWidth = () => {
+      const nextWidth = Math.round(element.getBoundingClientRect().width);
+      setContainerWidth(nextWidth);
     };
 
-    updateCalendarSize();
-    window.addEventListener('resize', updateCalendarSize);
+    updateWidth();
+
+    const observer = new ResizeObserver(updateWidth);
+    observer.observe(element);
 
     return () => {
-      window.removeEventListener('resize', updateCalendarSize);
+      observer.disconnect();
     };
   }, []);
 
   return (
     <div className="contribution-calendar-shell">
-      <div className="calendar-widget" role="img" aria-label={`GitHub contribution calendar for ${username}`}>
+      <div ref={widgetRef} className="calendar-widget" role="img" aria-label={`GitHub contribution calendar for ${username}`}>
         <GitHubCalendar
           username={username}
           colorScheme={colorScheme}
@@ -85,6 +96,7 @@ export default function GitHubContributionCalendar({ username }) {
           labels={{
             totalCount: '{{count}} contributions in the last year',
           }}
+          showMonthLabels={calendarSize.showMonthLabels}
           showWeekdayLabels={calendarSize.showWeekdayLabels}
           errorMessage="Unable to load GitHub contributions right now."
         />
