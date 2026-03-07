@@ -5,14 +5,6 @@ const weekdayLabels = ['', 'Mon', '', 'Wed', '', 'Fri', ''];
 
 const toDateKey = (date) => date.toISOString().slice(0, 10);
 
-const formatHoverDate = (date) => {
-  return date.toLocaleDateString('en-US', {
-    month: 'short',
-    day: 'numeric',
-    year: 'numeric',
-  });
-};
-
 const getContributionLevel = (count, maxCount) => {
   if (count <= 0 || maxCount <= 0) {
     return 0;
@@ -98,16 +90,6 @@ const buildCalendarData = (contributionMap, maxCount) => {
   };
 };
 
-const getHoverLabel = (day) => {
-  const commitLabel = `${day.count} commit${day.count === 1 ? '' : 's'}`;
-
-  if (day.isFuture) {
-    return `No data for ${formatHoverDate(day.date)}`;
-  }
-
-  return `${commitLabel} on ${formatHoverDate(day.date)}`;
-};
-
 export default function GitHubContributionCalendar({ username }) {
   const { contributionMap, maxCount, totalCount, loading, error } = useGitHubContributions(username);
 
@@ -150,8 +132,6 @@ export default function GitHubContributionCalendar({ username }) {
                     <span
                       key={day.dateKey}
                       className={`calendar-cell level-${day.level}${day.isFuture ? ' is-future' : ''}`}
-                      data-tooltip={getHoverLabel(day)}
-                      aria-label={getHoverLabel(day)}
                     />
                   ))}
                 </div>

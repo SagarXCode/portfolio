@@ -142,15 +142,39 @@ function App() {
               <p>Open to software developer opportunities, internships, and collaborations.</p>
             </div>
             <div className="contact-links">
-              <a
-                className="text-link reveal reveal-button"
-                style={{ animationDelay: '0.06s' }}
-                href="https://github.com/SagarXCode"
-                target="_blank"
-                rel="noreferrer"
-              >
-                GitHub
-              </a>
+              <div className="reveal reveal-button" style={{ animationDelay: '0.06s' }}>
+                <a
+                  className="text-link contact-link nav-lift"
+                  href="https://github.com/SagarXCode"
+                  target="_blank"
+                  rel="noreferrer"
+                  aria-label="GitHub profile"
+                >
+                  <span className="contact-link-icon-wrap" aria-hidden="true">
+                    <svg className="contact-link-icon" viewBox="0 0 24 24" fill="currentColor">
+                      <path d="M12 .5C5.65.5.5 5.66.5 12.03c0 5.1 3.3 9.42 7.87 10.95.58.1.79-.25.79-.56v-1.95c-3.2.7-3.88-1.55-3.88-1.55-.52-1.34-1.28-1.69-1.28-1.69-1.05-.72.08-.7.08-.7 1.16.08 1.77 1.2 1.77 1.2 1.03 1.77 2.7 1.26 3.36.96.1-.75.4-1.26.73-1.55-2.55-.29-5.23-1.28-5.23-5.7 0-1.26.45-2.28 1.19-3.08-.12-.3-.52-1.5.11-3.12 0 0 .98-.32 3.21 1.18a11.1 11.1 0 0 1 5.84 0c2.22-1.5 3.2-1.18 3.2-1.18.64 1.62.24 2.82.12 3.12.74.8 1.19 1.82 1.19 3.08 0 4.43-2.68 5.4-5.24 5.69.41.36.78 1.08.78 2.17v3.22c0 .31.21.67.8.56A11.55 11.55 0 0 0 23.5 12.03C23.5 5.66 18.35.5 12 .5Z" />
+                    </svg>
+                  </span>
+                  <span>GitHub</span>
+                </a>
+              </div>
+
+              <div className="reveal reveal-button" style={{ animationDelay: '0.12s' }}>
+                <a
+                  className="text-link contact-link nav-lift"
+                  href="https://www.linkedin.com/in/sagar-maurya-dev/"
+                  target="_blank"
+                  rel="noreferrer"
+                  aria-label="LinkedIn profile"
+                >
+                  <span className="contact-link-icon-wrap" aria-hidden="true">
+                    <svg className="contact-link-icon" viewBox="0 0 24 24" fill="currentColor">
+                      <path d="M4.98 3.5A2.49 2.49 0 0 0 2.5 6a2.49 2.49 0 0 0 2.48 2.5h.02A2.5 2.5 0 0 0 7.5 6 2.49 2.49 0 0 0 5 3.5h-.02ZM2.87 9.75h4.25V21H2.87V9.75Zm6.63 0h4.07v1.54h.06c.57-1.07 1.96-2.2 4.03-2.2 4.31 0 5.11 2.84 5.11 6.53V21h-4.24v-4.79c0-1.14-.02-2.61-1.59-2.61-1.6 0-1.84 1.25-1.84 2.53V21H9.5V9.75Z" />
+                    </svg>
+                  </span>
+                  <span>LinkedIn</span>
+                </a>
+              </div>
             </div>
           </div>
         </section>

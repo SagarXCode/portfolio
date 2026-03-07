@@ -107,8 +107,8 @@ a {
 
 .brand {
     font-family: 'Space Grotesk', 'Segoe UI', sans-serif;
-    letter-spacing: -0.01em;
-    font-size: 1.04rem;
+    letter-spacing: -0.005em;
+    font-size: 1.02rem;
     font-weight: 700;
     display: inline-flex;
     align-items: center;
@@ -119,11 +119,13 @@ a {
     border: 0;
     background: transparent;
     color: var(--text);
-    padding: 0.16rem 0.18rem;
+    padding: 0.2rem 0.46rem;
     border-radius: 999px;
     cursor: pointer;
     -webkit-appearance: none;
     appearance: none;
+    border: 1px solid transparent;
+    transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
 .brand-button:focus {
@@ -137,10 +139,11 @@ a {
 .brand-bracket {
     color: var(--accent);
     font-weight: 700;
+    opacity: 0.92;
 }
 
 .brand-bracket-close {
-    letter-spacing: -0.01em;
+    margin-left: 0.06rem;
 }
 
 .brand-name {
@@ -151,6 +154,12 @@ a {
 .brand-button:hover .brand-name,
 .brand-button:focus-visible .brand-name {
     color: var(--accent);
+}
+
+.brand-button:hover,
+.brand-button:focus-visible {
+    border-color: var(--line);
+    box-shadow: 0 12px 22px -24px var(--shadow-color);
 }
 
 .topbar-right {
@@ -599,6 +608,7 @@ a {
     border: 1px solid transparent;
     display: block;
     position: relative;
+    transition: transform 0.16s ease, filter 0.16s ease, border-color 0.16s ease;
 }
 
 .calendar-cell.level-0 {
@@ -626,37 +636,14 @@ a {
 }
 
 .calendar-cell:hover {
+    transform: translateY(-2px);
+    filter: brightness(1.08);
     border-color: rgba(255, 255, 255, 0.45);
 }
 
-.calendar-cell:hover::after {
-    content: attr(data-tooltip);
-    position: absolute;
-    left: 50%;
-    bottom: calc(100% + 8px);
-    transform: translateX(-50%);
-    white-space: nowrap;
-    color: var(--tooltip-text);
-    background: var(--tooltip-bg);
-    border-radius: 6px;
-    padding: 0.22rem 0.42rem;
-    font-size: 0.72rem;
-    letter-spacing: 0.01em;
-    z-index: 12;
-    pointer-events: none;
-}
-
-.calendar-cell:hover::before {
-    content: '';
-    position: absolute;
-    left: 50%;
-    bottom: calc(100% + 3px);
-    transform: translateX(-50%);
-    border-left: 5px solid transparent;
-    border-right: 5px solid transparent;
-    border-top: 5px solid var(--tooltip-bg);
-    z-index: 12;
-    pointer-events: none;
+.calendar-cell.is-future:hover {
+    transform: none;
+    filter: none;
 }
 
 .calendar-legend {
@@ -703,16 +690,48 @@ a {
 }
 
 .text-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.46rem;
     padding: 0.34rem 0.65rem;
     border-radius: 999px;
     border: 1px solid var(--line);
     font-size: 0.88rem;
     font-weight: 700;
     background: var(--surface-strong);
+    transition: border-color 0.2s ease, box-shadow 0.2s ease, color 0.2s ease;
 }
 
 .text-link:hover {
     border-color: #b8c9c7;
+}
+
+.contact-link {
+    color: var(--text);
+}
+
+.contact-link:hover,
+.contact-link:focus-visible {
+    border-color: var(--accent);
+    box-shadow: 0 16px 24px -24px var(--shadow-color);
+}
+
+.contact-link-icon-wrap {
+    width: 1.22rem;
+    height: 1.22rem;
+    border-radius: 999px;
+    background: #ffffff;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 auto;
+}
+
+.contact-link-icon {
+    width: 0.78rem;
+    height: 0.78rem;
+    color: #111111;
+    display: block;
 }
 
 .site-footer {

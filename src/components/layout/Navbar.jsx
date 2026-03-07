@@ -32,8 +32,8 @@ export default function Navbar({ theme, onToggleTheme }) {
             aria-label="Sagar Maurya"
           >
             <span className="brand-bracket" aria-hidden="true">&lt;</span>
-            <span className="brand-name">Sagar Maurya</span>
-            <span className="brand-bracket brand-bracket-close" aria-hidden="true"> /&gt;</span>
+            <span className="brand-name">Sagar Maurya </span>
+            <span className="brand-bracket brand-bracket-close" aria-hidden="true">/&gt;</span>
           </button>
         </div>
 
