@@ -198,9 +198,11 @@ a {
     padding: 0.22rem 0.5rem;
     border-radius: 999px;
     color: var(--text);
+    border: 1px solid transparent;
     font-size: 0.92rem;
     font-weight: 600;
-    transition: color 0.2s ease;
+    box-shadow: 0 0 0 transparent;
+    transition: color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
     -webkit-appearance: none;
     appearance: none;
 }
@@ -215,10 +217,14 @@ a {
 
 .topnav-link:hover {
     color: var(--text);
+    border-color: var(--accent);
+    box-shadow: 0 12px 22px -24px var(--shadow-color), 0 0 14px rgba(31, 95, 91, 0.2);
 }
 
 .topnav-link:focus-visible {
     color: var(--text);
+    border-color: var(--accent);
+    box-shadow: 0 12px 22px -24px var(--shadow-color), 0 0 14px rgba(31, 95, 91, 0.2);
     outline: 2px solid var(--accent);
     outline-offset: 2px;
 }
@@ -226,6 +232,7 @@ a {
 :root[data-theme='dark'] .topnav-link:hover,
 :root[data-theme='dark'] .topnav-link:focus-visible {
     color: var(--accent);
+    box-shadow: 0 12px 22px -20px rgba(0, 0, 0, 0.82), 0 0 18px rgba(126, 192, 187, 0.28);
 }
 
 .nav-lift {
@@ -487,10 +494,11 @@ a {
     margin-top: 1.1rem;
     display: flex;
     justify-content: center;
+    width: 100%;
 }
 
 .activity-card-wrap {
-    width: 100%;
+    width: min(100%, 1040px);
     display: flex;
     justify-content: center;
 }
@@ -511,7 +519,7 @@ a {
 }
 
 .github-card.calendar-card {
-    width: fit-content;
+    width: min(100%, 1020px);
     max-width: 100%;
     margin-inline: auto;
 }
@@ -559,7 +567,7 @@ a {
 }
 
 .calendar-widget {
-    width: min(100%, 860px);
+    width: 100%;
     margin: 0 auto;
     display: flex;
     justify-content: center;
@@ -567,7 +575,7 @@ a {
 
 .calendar-widget .react-activity-calendar {
     width: 100% !important;
-    max-width: 100% !important;
+    max-width: 980px !important;
     margin: 0 auto;
     color: var(--muted);
 }

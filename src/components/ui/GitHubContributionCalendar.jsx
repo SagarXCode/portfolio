@@ -16,23 +16,27 @@ const getColorScheme = () => {
 
 const getCalendarSize = () => {
   if (typeof window === 'undefined') {
-    return { blockSize: 10, blockMargin: 3, fontSize: 12 };
+    return { blockSize: 10, blockMargin: 3, fontSize: 12, showWeekdayLabels: true };
   }
 
   const viewportWidth = window.innerWidth;
   if (viewportWidth <= 420) {
-    return { blockSize: 5, blockMargin: 1, fontSize: 10 };
+    return { blockSize: 4, blockMargin: 1, fontSize: 9, showWeekdayLabels: false };
+  }
+
+  if (viewportWidth <= 560) {
+    return { blockSize: 5, blockMargin: 1, fontSize: 10, showWeekdayLabels: false };
   }
 
   if (viewportWidth <= 700) {
-    return { blockSize: 6, blockMargin: 2, fontSize: 11 };
+    return { blockSize: 6, blockMargin: 1, fontSize: 10, showWeekdayLabels: true };
   }
 
   if (viewportWidth <= 980) {
-    return { blockSize: 8, blockMargin: 2, fontSize: 11 };
+    return { blockSize: 8, blockMargin: 2, fontSize: 11, showWeekdayLabels: true };
   }
 
-  return { blockSize: 10, blockMargin: 3, fontSize: 12 };
+  return { blockSize: 10, blockMargin: 3, fontSize: 12, showWeekdayLabels: true };
 };
 
 export default function GitHubContributionCalendar({ username }) {
@@ -81,7 +85,7 @@ export default function GitHubContributionCalendar({ username }) {
           labels={{
             totalCount: '{{count}} contributions in the last year',
           }}
-          showWeekdayLabels
+          showWeekdayLabels={calendarSize.showWeekdayLabels}
           errorMessage="Unable to load GitHub contributions right now."
         />
       </div>
