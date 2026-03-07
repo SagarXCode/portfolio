@@ -19,14 +19,14 @@ const TOTAL_WEEKS = 54;
 
 const getCalendarSize = (containerWidth) => {
   const width = Math.max(220, containerWidth || 0);
-  const showWeekdayLabels = width >= 560;
-  const showMonthLabels = width >= 380;
-  const blockMargin = width >= 900 ? 2 : 1;
+  const showWeekdayLabels = false;
+  const showMonthLabels = width >= 760;
+  const blockMargin = width >= 1080 ? 2 : 1;
 
-  const horizontalReservedSpace = showWeekdayLabels ? 44 : 8;
-  const gridWidth = Math.max(180, width - horizontalReservedSpace);
+  const horizontalReservedSpace = 10;
+  const gridWidth = Math.max(170, width - horizontalReservedSpace);
   const rawBlockSize = Math.floor((gridWidth - (TOTAL_WEEKS - 1) * blockMargin) / TOTAL_WEEKS);
-  const blockSize = clamp(rawBlockSize, 2, 10);
+  const blockSize = clamp(rawBlockSize, 2, 11);
 
   let fontSize = 12;
   if (width < 420) {

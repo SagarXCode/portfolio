@@ -501,6 +501,8 @@ a {
     width: min(100%, 1040px);
     display: flex;
     justify-content: center;
+    min-width: 0;
+    overflow: hidden;
 }
 
 .github-card {
@@ -521,6 +523,9 @@ a {
 .github-card.calendar-card {
     width: min(100%, 1020px);
     max-width: 100%;
+    min-width: 0;
+    padding: 1rem 1.1rem 1.05rem;
+    overflow: hidden;
     margin-inline: auto;
 }
 
@@ -564,6 +569,8 @@ a {
     display: flex;
     justify-content: center;
     width: 100%;
+    min-width: 0;
+    overflow: hidden;
 }
 
 .calendar-widget {
@@ -578,7 +585,7 @@ a {
 
 .calendar-widget .react-activity-calendar {
     width: 100% !important;
-    max-width: 980px !important;
+    max-width: 100% !important;
     min-width: 0;
     margin: 0 auto;
     color: var(--muted);
@@ -606,7 +613,7 @@ a {
 .calendar-widget .react-activity-calendar svg {
     width: 100%;
     height: auto;
-    overflow: visible;
+    overflow: hidden;
 }
 
 .calendar-widget .react-activity-calendar text {
