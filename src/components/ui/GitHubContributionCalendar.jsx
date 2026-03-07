@@ -5,11 +5,20 @@ const weekdayLabels = ['', 'Mon', '', 'Wed', '', 'Fri', ''];
 
 const toDateKey = (date) => date.toISOString().slice(0, 10);
 
+const parseDateKey = (dateKey) => new Date(`${dateKey}T00:00:00Z`);
+
+const addUtcDays = (date, days) => {
+  const updated = new Date(date);
+  updated.setUTCDate(updated.getUTCDate() + days);
+  return updated;
+};
+
 const formatHoverDate = (date) => {
   return date.toLocaleDateString('en-US', {
     month: 'short',
     day: 'numeric',
     year: 'numeric',
+    timeZone: 'UTC',
   });
 };
 
@@ -34,32 +43,41 @@ const getContributionLevel = (count, maxCount) => {
   return 4;
 };
 
-const buildCalendarData = (contributionMap, maxCount) => {
-  const today = new Date();
-  today.setHours(0, 0, 0, 0);
+const getLatestDateKey = (contributionMap) => {
+  if (contributionMap.size === 0) {
+    return toDateKey(new Date());
+  }
 
-  const start = new Date(today);
-  start.setDate(start.getDate() - 364);
+  const sortedDates = [...contributionMap.keys()].sort((left, right) => left.localeCompare(right));
+  return sortedDates[sortedDates.length - 1];
+};
 
-  const alignedStart = new Date(start);
-  alignedStart.setDate(alignedStart.getDate() - alignedStart.getDay());
+const buildCalendarData = (contributionMap, contributionColorMap, maxCount) => {
+  const latestDateKey = getLatestDateKey(contributionMap);
+  const latestDate = parseDateKey(latestDateKey);
+
+  const start = addUtcDays(latestDate, -364);
+
+  const alignedStart = addUtcDays(start, -start.getUTCDay());
 
   const allDays = [];
-  const cursor = new Date(alignedStart);
+  let cursor = new Date(alignedStart);
 
-  while (cursor <= today) {
+  while (cursor <= latestDate) {
     const dateKey = toDateKey(cursor);
     const count = contributionMap.get(dateKey) ?? 0;
+    const color = contributionColorMap.get(dateKey) ?? null;
 
     allDays.push({
       date: new Date(cursor),
       dateKey,
       count,
+      color,
       level: getContributionLevel(count, maxCount),
       isFuture: false,
     });
 
-    cursor.setDate(cursor.getDate() + 1);
+    cursor = addUtcDays(cursor, 1);
   }
 
   while (allDays.length % 7 !== 0) {
@@ -69,11 +87,12 @@ const buildCalendarData = (contributionMap, maxCount) => {
       date: new Date(cursor),
       dateKey,
       count: 0,
+      color: null,
       level: 0,
       isFuture: true,
     });
 
-    cursor.setDate(cursor.getDate() + 1);
+    cursor = addUtcDays(cursor, 1);
   }
 
   const weeks = [];
@@ -82,11 +101,11 @@ const buildCalendarData = (contributionMap, maxCount) => {
   }
 
   const monthLabels = weeks.map((week, index) => {
-    const currentMonth = week[0].date.getMonth();
-    const previousMonth = index === 0 ? null : weeks[index - 1][0].date.getMonth();
+    const currentMonth = week[0].date.getUTCMonth();
+    const previousMonth = index === 0 ? null : weeks[index - 1][0].date.getUTCMonth();
 
     if (index === 0 || currentMonth !== previousMonth) {
-      return week[0].date.toLocaleString('en-US', { month: 'short' });
+      return week[0].date.toLocaleString('en-US', { month: 'short', timeZone: 'UTC' });
     }
 
     return '';
@@ -99,25 +118,26 @@ const buildCalendarData = (contributionMap, maxCount) => {
 };
 
 const getHoverLabel = (day) => {
-  const commitLabel = `${day.count} commit${day.count === 1 ? '' : 's'}`;
+  const contributionLabel = `${day.count} contribution${day.count === 1 ? '' : 's'}`;
 
   if (day.isFuture) {
     return `No data for ${formatHoverDate(day.date)}`;
   }
 
-  return `${commitLabel} on ${formatHoverDate(day.date)}`;
+  return `${contributionLabel} on ${formatHoverDate(day.date)}`;
 };
 
 export default function GitHubContributionCalendar({ username }) {
-  const { contributionMap, maxCount, totalCount, loading, error } = useGitHubContributions(username);
+  const { contributionMap, contributionColorMap, maxCount, totalCount, loading, error } =
+    useGitHubContributions(username);
 
   const { weeks, monthLabels } = useMemo(() => {
-    return buildCalendarData(contributionMap, maxCount);
-  }, [contributionMap, maxCount]);
+    return buildCalendarData(contributionMap, contributionColorMap, maxCount);
+  }, [contributionMap, contributionColorMap, maxCount]);
 
   const summaryText = loading
     ? 'Loading contribution data...'
-    : `${totalCount} commits in the last 12 months`;
+    : `${totalCount} contributions in the last 12 months`;
 
   return (
     <div className="contribution-calendar-shell">
@@ -150,6 +170,7 @@ export default function GitHubContributionCalendar({ username }) {
                     <span
                       key={day.dateKey}
                       className={`calendar-cell level-${day.level}${day.isFuture ? ' is-future' : ''}`}
+                      style={day.color ? { backgroundColor: day.color } : undefined}
                       data-tooltip={getHoverLabel(day)}
                       aria-label={getHoverLabel(day)}
                     />
