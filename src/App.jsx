@@ -79,12 +79,18 @@ function App() {
       activateCard(event.target);
     };
 
+    const handleTouchMove = (event) => {
+      activateCard(event.target);
+    };
+
     document.addEventListener('touchstart', handleTouchStart, { passive: true });
+    document.addEventListener('touchmove', handleTouchMove, { passive: true });
     document.addEventListener('touchend', clearActiveCard, { passive: true });
     document.addEventListener('touchcancel', clearActiveCard, { passive: true });
 
     return () => {
       document.removeEventListener('touchstart', handleTouchStart);
+      document.removeEventListener('touchmove', handleTouchMove);
       document.removeEventListener('touchend', clearActiveCard);
       document.removeEventListener('touchcancel', clearActiveCard);
       clearActiveCard();

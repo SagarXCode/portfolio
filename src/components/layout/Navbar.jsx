@@ -32,20 +32,31 @@ export default function Navbar({ theme, onToggleTheme }) {
     const topbar = document.querySelector('.topbar');
     const topbarHeight = topbar instanceof HTMLElement ? topbar.offsetHeight : 0;
     const sectionHeader = targetSection.querySelector('.section-header');
-    const anchorElement = sectionHeader instanceof HTMLElement ? sectionHeader : targetSection;
-
-    const anchorTop = anchorElement.getBoundingClientRect().top + window.scrollY;
     const viewportHeight = window.innerHeight;
     const availableViewport = Math.max(320, viewportHeight - topbarHeight);
     const sectionKey = href.slice(1);
-    const sectionVisualRatio = sectionKey === 'projects' ? 0.31 : 0.24;
+    const sectionVisualRatio = sectionKey === 'projects' ? 0.44 : 0.24;
+    const sectionAnchorSelector = sectionKey === 'projects' ? '.projects-grid' : '.section-header';
+    const sectionAnchor = targetSection.querySelector(sectionAnchorSelector);
+    const anchorElement = sectionAnchor instanceof HTMLElement
+      ? sectionAnchor
+      : sectionHeader instanceof HTMLElement
+        ? sectionHeader
+        : targetSection;
+    const anchorTop = anchorElement.getBoundingClientRect().top + window.scrollY;
     const desiredAnchorY = topbarHeight + Math.round(availableViewport * sectionVisualRatio);
 
     const maxScrollableTop = Math.max(0, document.documentElement.scrollHeight - viewportHeight);
-    const targetTop = Math.min(
+    let targetTop = Math.min(
       maxScrollableTop,
       Math.max(0, anchorTop - desiredAnchorY),
     );
+
+    if (sectionKey === 'projects' && sectionHeader instanceof HTMLElement) {
+      const projectsHeaderTop = sectionHeader.getBoundingClientRect().top + window.scrollY;
+      const maxTopWithHeaderVisible = Math.max(0, projectsHeaderTop - topbarHeight - 14);
+      targetTop = Math.min(targetTop, maxTopWithHeaderVisible);
+    }
 
     window.scrollTo({ top: targetTop, behavior });
     window.history.replaceState(null, '', href);

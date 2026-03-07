@@ -937,12 +937,19 @@ a {
         width: 100%;
         justify-content: flex-start;
         align-items: flex-start;
-        flex-wrap: wrap;
+        flex-direction: column;
+        flex-wrap: nowrap;
         gap: 0.55rem;
+    }
+
+    .topbar-right nav {
+        width: 100%;
     }
 
     .theme-toggle-wrap {
         align-self: flex-start;
+        width: 100%;
+        justify-content: flex-start;
     }
 
     .topnav {
