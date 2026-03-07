@@ -18,15 +18,16 @@ const clamp = (value, min, max) => Math.min(max, Math.max(min, value));
 const TOTAL_WEEKS = 54;
 
 const getCalendarSize = (containerWidth) => {
-  const width = Math.max(220, containerWidth || 0);
+  const width = Math.max(240, containerWidth || 0);
+  const isPhoneWidth = width <= 600;
   const showWeekdayLabels = false;
-  const showMonthLabels = width >= 760;
-  const blockMargin = width >= 1080 ? 2 : 1;
+  const showMonthLabels = width >= 860;
+  const blockMargin = width >= 1080 ? 2 : isPhoneWidth ? 0 : 1;
 
-  const horizontalReservedSpace = 10;
+  const horizontalReservedSpace = isPhoneWidth ? 2 : 8;
   const gridWidth = Math.max(170, width - horizontalReservedSpace);
   const rawBlockSize = Math.floor((gridWidth - (TOTAL_WEEKS - 1) * blockMargin) / TOTAL_WEEKS);
-  const blockSize = clamp(rawBlockSize, 2, 11);
+  const blockSize = clamp(rawBlockSize, isPhoneWidth ? 4 : 3, isPhoneWidth ? 6 : 11);
 
   let fontSize = 12;
   if (width < 420) {
