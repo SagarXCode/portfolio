@@ -5,8 +5,36 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Portfolio</title>
-  <script type="module" crossorigin src="/portfolio/assets/index-BRclfTLP.js"></script>
-  <link rel="stylesheet" crossorigin href="/portfolio/assets/index-B35Ploqk.css">
+  <style>
+    html,
+    body {
+      background-color: #f6f3ee;
+    }
+
+    html[data-theme='dark'],
+    html[data-theme='dark'] body {
+      background-color: #10161d;
+    }
+  </style>
+  <script>
+    (function setInitialTheme() {
+      try {
+        var savedTheme = window.localStorage.getItem('theme');
+        var theme =
+          savedTheme === 'light' || savedTheme === 'dark'
+            ? savedTheme
+            : window.matchMedia('(prefers-color-scheme: dark)').matches
+              ? 'dark'
+              : 'light';
+
+        document.documentElement.setAttribute('data-theme', theme);
+      } catch (error) {
+        document.documentElement.setAttribute('data-theme', 'light');
+      }
+    })();
+  </script>
+  <script type="module" crossorigin src="/portfolio/assets/index-Cr8EPGX7.js"></script>
+  <link rel="stylesheet" crossorigin href="/portfolio/assets/index-DUUkHuaQ.css">
 </head>
 
 <body>
