@@ -1,13 +1,12 @@
-const Navbar = () => (
-  <nav className="bg-white shadow-sm p-4">
-    <div className="max-w-6xl mx-auto flex justify-between items-center">
-      <h1 className="font-bold text-xl">My Portfolio</h1>
-      <div className="flex gap-4">
-        <a href="#projects" className="hover:text-blue-600">Projects</a>
-        <a href="https://github.com/SagarXCode" target="_blank" className="hover:text-blue-600">GitHub</a>
-      </div>
-    </div>
-  </nav>
-);
-
-export default Navbar;
+export default function Navbar() {
+  return (
+    <nav className="flex justify-between items-center py-6 px-10 bg-white shadow-sm">
+      <h1 className="text-2xl font-bold text-gray-800">Sagar Maurya</h1>
+      <ul className="flex gap-8 text-gray-600">
+        <li className="hover:text-blue-500 cursor-pointer">Projects</li>
+        <li className="hover:text-blue-500 cursor-pointer">Skills</li>
+        <li className="hover:text-blue-500 cursor-pointer">Contact</li>
+      </ul>
+    </nav>
+  );
+}
