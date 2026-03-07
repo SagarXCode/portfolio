@@ -40,6 +40,57 @@ function App() {
     window.localStorage.setItem('theme', theme);
   }, [theme]);
 
+  useEffect(() => {
+    const cardSelector = '.project-card, .activity-card, .contact-card';
+    let activeCard = null;
+
+    const getCardElement = (eventTarget) => {
+      if (!(eventTarget instanceof Element)) {
+        return null;
+      }
+
+      return eventTarget.closest(cardSelector);
+    };
+
+    const activateCard = (eventTarget) => {
+      const nextCard = getCardElement(eventTarget);
+      if (!nextCard) {
+        return;
+      }
+
+      if (activeCard && activeCard !== nextCard) {
+        activeCard.classList.remove('touch-active');
+      }
+
+      activeCard = nextCard;
+      activeCard.classList.add('touch-active');
+    };
+
+    const clearActiveCard = () => {
+      if (!activeCard) {
+        return;
+      }
+
+      activeCard.classList.remove('touch-active');
+      activeCard = null;
+    };
+
+    const handleTouchStart = (event) => {
+      activateCard(event.target);
+    };
+
+    document.addEventListener('touchstart', handleTouchStart, { passive: true });
+    document.addEventListener('touchend', clearActiveCard, { passive: true });
+    document.addEventListener('touchcancel', clearActiveCard, { passive: true });
+
+    return () => {
+      document.removeEventListener('touchstart', handleTouchStart);
+      document.removeEventListener('touchend', clearActiveCard);
+      document.removeEventListener('touchcancel', clearActiveCard);
+      clearActiveCard();
+    };
+  }, []);
+
   const handleThemeToggle = () => {
     setTheme((currentTheme) => (currentTheme === 'light' ? 'dark' : 'light'));
   };

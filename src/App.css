@@ -285,6 +285,12 @@ a {
     transform: translateY(-2px);
 }
 
+.theme-toggle-wrap {
+    display: inline-flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+
 .main-content {
     max-width: var(--max-width);
     margin: 0 auto;
@@ -734,9 +740,24 @@ a {
         box-shadow: 0 14px 24px -22px var(--shadow-color);
     }
 
+    .project-card.touch-active,
+    .contact-card.touch-active,
+    .activity-card.touch-active {
+        transform: translateY(-2px);
+        border-color: var(--accent);
+        box-shadow: 0 14px 24px -22px var(--shadow-color);
+    }
+
     :root[data-theme='dark'] .project-card:active,
     :root[data-theme='dark'] .contact-card:active,
     :root[data-theme='dark'] .activity-card:active {
+        box-shadow: 0 14px 24px -20px rgba(0, 0, 0, 0.82), 0 0 0 1px rgba(126, 192, 187, 0.24),
+            0 0 18px rgba(126, 192, 187, 0.18);
+    }
+
+    :root[data-theme='dark'] .project-card.touch-active,
+    :root[data-theme='dark'] .contact-card.touch-active,
+    :root[data-theme='dark'] .activity-card.touch-active {
         box-shadow: 0 14px 24px -20px rgba(0, 0, 0, 0.82), 0 0 0 1px rgba(126, 192, 187, 0.24),
             0 0 18px rgba(126, 192, 187, 0.18);
     }
@@ -920,6 +941,10 @@ a {
         gap: 0.55rem;
     }
 
+    .theme-toggle-wrap {
+        align-self: flex-start;
+    }
+
     .topnav {
         flex-wrap: wrap;
         row-gap: 0.45rem;
@@ -1001,6 +1026,11 @@ a {
 
     .theme-toggle {
         align-self: flex-start;
+    }
+
+    .theme-toggle-wrap {
+        width: 100%;
+        justify-content: flex-start;
     }
 
     .theme-toggle svg {

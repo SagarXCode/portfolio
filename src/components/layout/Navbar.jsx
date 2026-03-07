@@ -37,12 +37,14 @@ export default function Navbar({ theme, onToggleTheme }) {
     const anchorTop = anchorElement.getBoundingClientRect().top + window.scrollY;
     const viewportHeight = window.innerHeight;
     const availableViewport = Math.max(320, viewportHeight - topbarHeight);
-    const visualOffset = Math.round(availableViewport * 0.24);
+    const sectionKey = href.slice(1);
+    const sectionVisualRatio = sectionKey === 'projects' ? 0.31 : 0.24;
+    const desiredAnchorY = topbarHeight + Math.round(availableViewport * sectionVisualRatio);
 
     const maxScrollableTop = Math.max(0, document.documentElement.scrollHeight - viewportHeight);
     const targetTop = Math.min(
       maxScrollableTop,
-      Math.max(0, anchorTop - topbarHeight - visualOffset),
+      Math.max(0, anchorTop - desiredAnchorY),
     );
 
     window.scrollTo({ top: targetTop, behavior });
@@ -96,7 +98,7 @@ export default function Navbar({ theme, onToggleTheme }) {
             </ul>
           </nav>
 
-          <div className="reveal reveal-button" style={{ animationDelay: '0.29s' }}>
+          <div className="theme-toggle-wrap reveal reveal-button" style={{ animationDelay: '0.29s' }}>
             <button
               type="button"
               className="theme-toggle nav-lift"
