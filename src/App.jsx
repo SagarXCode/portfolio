@@ -40,18 +40,17 @@ function App() {
   }, [theme]);
 
   const githubStatsUrl = useMemo(() => {
-    const isDark = theme === 'dark';
-    const titleColor = isDark ? 'e4ebf2' : '1f2933';
-    const textColor = isDark ? '9fb0c2' : '5f6872';
-    const iconColor = isDark ? '7ec0bb' : '1f5f5b';
-
-    return `https://github-readme-stats.vercel.app/api?username=${GITHUB_USERNAME}&show_icons=true&hide_border=true&bg_color=00000000&title_color=${titleColor}&text_color=${textColor}&icon_color=${iconColor}`;
-  }, [theme]);
+    return `https://github-profile-summary-cards.vercel.app/api/cards/stats?username=${GITHUB_USERNAME}`;
+  }, []);
 
   const contributionGraphUrl = useMemo(() => {
     const graphTheme = theme === 'dark' ? 'github-dark' : 'github-light';
     return `https://github-readme-activity-graph.vercel.app/graph?username=${GITHUB_USERNAME}&theme=${graphTheme}&hide_border=true&radius=8`;
   }, [theme]);
+
+  const contributionCalendarUrl = useMemo(() => {
+    return `https://ghchart.rshah.org/${GITHUB_USERNAME}`;
+  }, []);
 
   const handleThemeToggle = () => {
     setTheme((currentTheme) => (currentTheme === 'light' ? 'dark' : 'light'));
@@ -119,24 +118,40 @@ function App() {
           </header>
 
           <div className="github-stats-grid">
-            <article className="github-card">
+            <article className="github-card stats-card">
               <h3>GitHub Stats</h3>
-              <img
-                className="github-image"
-                src={githubStatsUrl}
-                alt={`${GITHUB_USERNAME} GitHub statistics`}
-                loading="lazy"
-              />
+              <div className="github-image-wrap">
+                <img
+                  className="github-image"
+                  src={githubStatsUrl}
+                  alt={`${GITHUB_USERNAME} GitHub statistics`}
+                  loading="lazy"
+                />
+              </div>
             </article>
 
             <article className="github-card wide">
               <h3>Contribution Graph</h3>
-              <img
-                className="github-image"
-                src={contributionGraphUrl}
-                alt={`${GITHUB_USERNAME} contribution graph`}
-                loading="lazy"
-              />
+              <div className="github-image-wrap">
+                <img
+                  className="github-image"
+                  src={contributionGraphUrl}
+                  alt={`${GITHUB_USERNAME} contribution graph`}
+                  loading="lazy"
+                />
+              </div>
+            </article>
+
+            <article className="github-card wide">
+              <h3>GitHub Contribution Calendar</h3>
+              <div className="github-image-wrap">
+                <img
+                  className="github-image"
+                  src={contributionCalendarUrl}
+                  alt={`${GITHUB_USERNAME} contribution calendar`}
+                  loading="lazy"
+                />
+              </div>
             </article>
           </div>
         </section>

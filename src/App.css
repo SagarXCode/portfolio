@@ -335,29 +335,42 @@ a {
 
 .github-card {
     border: 1px solid var(--line);
-    border-radius: 14px;
+    border-radius: 16px;
     background: var(--surface);
-    padding: 0.9rem;
+    padding: 1rem;
 }
 
 .github-card h3 {
-    margin: 0 0 0.65rem;
+    margin: 0 0 0.8rem;
     color: var(--muted);
     font-size: 0.8rem;
     letter-spacing: 0.08em;
     text-transform: uppercase;
 }
 
+.github-card.stats-card {
+    max-width: 540px;
+}
+
 .github-card.wide {
     grid-column: 1 / -1;
 }
 
+.github-image-wrap {
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    background: var(--surface-strong);
+    overflow: hidden;
+    padding: 0.35rem;
+}
+
 .github-image {
     width: 100%;
+    max-width: 100%;
+    height: auto;
     display: block;
-    border-radius: 10px;
-    border: 1px solid var(--line);
-    background: var(--surface-strong);
+    object-fit: contain;
+    border-radius: 8px;
 }
 
 .contact-card {
@@ -443,6 +456,10 @@ a {
 
     .github-stats-grid {
         grid-template-columns: 1fr;
+    }
+
+    .github-card.stats-card {
+        max-width: none;
     }
 
     .github-card.wide {
