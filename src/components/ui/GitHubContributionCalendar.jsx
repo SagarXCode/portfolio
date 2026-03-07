@@ -15,18 +15,18 @@ const getColorScheme = () => {
 };
 
 const clamp = (value, min, max) => Math.min(max, Math.max(min, value));
+const TOTAL_WEEKS = 54;
 
 const getCalendarSize = (containerWidth) => {
   const width = Math.max(220, containerWidth || 0);
-  const compactMode = width < 640;
-  const showWeekdayLabels = !compactMode;
-  const showMonthLabels = width >= 360;
-  const blockMargin = width < 760 ? 1 : 2;
+  const showWeekdayLabels = width >= 560;
+  const showMonthLabels = width >= 380;
+  const blockMargin = width >= 900 ? 2 : 1;
 
-  const horizontalReservedSpace = showWeekdayLabels ? 32 : 8;
-  const usableWidth = Math.max(240, width - horizontalReservedSpace);
-  const rawBlockSize = Math.floor(usableWidth / 53) - blockMargin;
-  const blockSize = clamp(rawBlockSize, 3, 10);
+  const horizontalReservedSpace = showWeekdayLabels ? 44 : 8;
+  const gridWidth = Math.max(180, width - horizontalReservedSpace);
+  const rawBlockSize = Math.floor((gridWidth - (TOTAL_WEEKS - 1) * blockMargin) / TOTAL_WEEKS);
+  const blockSize = clamp(rawBlockSize, 2, 10);
 
   let fontSize = 12;
   if (width < 420) {
