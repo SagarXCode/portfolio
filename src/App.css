@@ -143,7 +143,12 @@ a {
 }
 
 .brand-bracket-close {
-    margin-left: 0.06rem;
+    margin-left: 0;
+}
+
+.brand-gap {
+    display: inline-block;
+    width: 0.26ch;
 }
 
 .brand-name {
@@ -358,6 +363,11 @@ a {
 .section {
     padding: 2.6rem 0;
     border-bottom: 1px solid var(--line);
+    scroll-margin-top: 6.8rem;
+}
+
+#home {
+    scroll-margin-top: 0;
 }
 
 .section-header h2 {

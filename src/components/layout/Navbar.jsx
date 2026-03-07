@@ -7,16 +7,35 @@ const links = [
 ];
 
 export default function Navbar({ theme, onToggleTheme }) {
-  const handleBrandClick = () => {
-    const homeSection = document.getElementById('home');
-
-    if (homeSection) {
-      homeSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      window.history.replaceState(null, '', '#home');
+  const scrollToSection = (href) => {
+    if (href === '#home') {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      window.history.replaceState(null, '', window.location.pathname + window.location.search);
       return;
     }
 
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    const targetSection = document.querySelector(href);
+    if (!targetSection) {
+      return;
+    }
+
+    const topbar = document.querySelector('.topbar');
+    const topbarHeight = topbar instanceof HTMLElement ? topbar.offsetHeight : 0;
+    const visualOffset = Math.round(window.innerHeight * 0.12);
+    const sectionTop = targetSection.getBoundingClientRect().top + window.scrollY;
+    const targetTop = Math.max(0, sectionTop - topbarHeight - visualOffset);
+
+    window.scrollTo({ top: targetTop, behavior: 'smooth' });
+    window.history.replaceState(null, '', href);
+  };
+
+  const handleBrandClick = () => {
+    scrollToSection('#home');
+  };
+
+  const handleNavLinkClick = (event, href) => {
+    event.preventDefault();
+    scrollToSection(href);
   };
 
   const nextTheme = theme === 'light' ? 'dark' : 'light';
@@ -32,7 +51,8 @@ export default function Navbar({ theme, onToggleTheme }) {
             aria-label="Sagar Maurya"
           >
             <span className="brand-bracket" aria-hidden="true">&lt;</span>
-            <span className="brand-name">Sagar Maurya </span>
+            <span className="brand-name">Sagar Maurya</span>
+            <span className="brand-gap" aria-hidden="true">&nbsp;</span>
             <span className="brand-bracket brand-bracket-close" aria-hidden="true">/&gt;</span>
           </button>
         </div>
@@ -43,7 +63,11 @@ export default function Navbar({ theme, onToggleTheme }) {
               {links.map((link, index) => (
                 <li key={link.href}>
                   <span className="reveal" style={{ animationDelay: `${0.12 + index * 0.08}s` }}>
-                    <a href={link.href} className="topnav-link nav-lift">
+                    <a
+                      href={link.href}
+                      className="topnav-link nav-lift"
+                      onClick={(event) => handleNavLinkClick(event, link.href)}
+                    >
                       {link.label}
                     </a>
                   </span>
