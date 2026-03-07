@@ -1,13 +1,25 @@
 import { useEffect, useMemo, useState } from 'react';
 
 const contributionEndpoints = [
-	(username) => `https://github-contributions-api.jogruber.de/v4/${username}?y=last`,
-	(username) => `https://github-contributions-api.deno.dev/${username}.json`,
+	(username, cacheBuster) =>
+		`https://github-contributions-api.jogruber.de/v4/${username}?y=last&${cacheBuster}`,
+	(username, cacheBuster) => `https://github-contributions-api.deno.dev/${username}.json?${cacheBuster}`,
 ];
+
+const dateKeyPattern = /(\d{4}-\d{2}-\d{2})/;
+
+const toUtcDateKey = (date) => date.toISOString().slice(0, 10);
 
 const normalizeDateKey = (input) => {
 	if (!input) {
 		return null;
+	}
+
+	if (typeof input === 'string') {
+		const match = input.match(dateKeyPattern);
+		if (match) {
+			return match[1];
+		}
 	}
 
 	const normalized = new Date(input);
@@ -15,7 +27,29 @@ const normalizeDateKey = (input) => {
 		return null;
 	}
 
-	return normalized.toISOString().slice(0, 10);
+	return toUtcDateKey(normalized);
+};
+
+const readEntriesFromWeeks = (weeks) => {
+	if (!Array.isArray(weeks)) {
+		return [];
+	}
+
+	const entries = [];
+
+	weeks.forEach((week) => {
+		if (Array.isArray(week)) {
+			entries.push(...week);
+			return;
+		}
+
+		const days = week?.contributionDays ?? week?.days ?? week?.contributions;
+		if (Array.isArray(days)) {
+			entries.push(...days);
+		}
+	});
+
+	return entries;
 };
 
 const readContributionEntries = (payload) => {
@@ -23,7 +57,26 @@ const readContributionEntries = (payload) => {
 		return [];
 	}
 
+	if (Array.isArray(payload.weeks)) {
+		return readEntriesFromWeeks(payload.weeks);
+	}
+
 	if (Array.isArray(payload.contributions)) {
+		if (payload.contributions.some((entry) => Array.isArray(entry))) {
+			return readEntriesFromWeeks(payload.contributions);
+		}
+
+		if (
+			payload.contributions.some(
+				(entry) =>
+					Array.isArray(entry?.contributionDays) ||
+					Array.isArray(entry?.days) ||
+					Array.isArray(entry?.contributions),
+			)
+		) {
+			return readEntriesFromWeeks(payload.contributions);
+		}
+
 		return payload.contributions;
 	}
 
@@ -89,7 +142,11 @@ export const useGitHubContributions = (username) => {
 
 			for (const endpoint of contributionEndpoints) {
 				try {
-					const response = await fetch(endpoint(username), { signal: controller.signal });
+					const cacheBuster = `ts=${Date.now()}`;
+					const response = await fetch(endpoint(username, cacheBuster), {
+						signal: controller.signal,
+						cache: 'no-store',
+					});
 					if (!response.ok) {
 						continue;
 					}
