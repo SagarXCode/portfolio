@@ -31,32 +31,40 @@ export default function Navbar({ theme, onToggleTheme }) {
 
     const topbar = document.querySelector('.topbar');
     const topbarHeight = topbar instanceof HTMLElement ? topbar.offsetHeight : 0;
-    const sectionHeader = targetSection.querySelector('.section-header');
     const viewportHeight = window.innerHeight;
-    const availableViewport = Math.max(320, viewportHeight - topbarHeight);
     const sectionKey = href.slice(1);
-    const sectionVisualRatio = sectionKey === 'projects' ? 0.44 : 0.24;
-    const sectionAnchorSelector = sectionKey === 'projects' ? '.projects-grid' : '.section-header';
-    const sectionAnchor = targetSection.querySelector(sectionAnchorSelector);
-    const anchorElement = sectionAnchor instanceof HTMLElement
-      ? sectionAnchor
-      : sectionHeader instanceof HTMLElement
-        ? sectionHeader
-        : targetSection;
-    const anchorTop = anchorElement.getBoundingClientRect().top + window.scrollY;
-    const desiredAnchorY = topbarHeight + Math.round(availableViewport * sectionVisualRatio);
+    const sectionHeader = targetSection.querySelector('.section-header');
+    const pageHeight = Math.max(document.body.scrollHeight, document.documentElement.scrollHeight);
+    const maxScrollableTop = Math.max(0, pageHeight - viewportHeight);
+    const clampTop = (value) => Math.min(maxScrollableTop, Math.max(0, Math.round(value)));
 
-    const maxScrollableTop = Math.max(0, document.documentElement.scrollHeight - viewportHeight);
-    let targetTop = Math.min(
-      maxScrollableTop,
-      Math.max(0, anchorTop - desiredAnchorY),
-    );
+    if (sectionKey === 'projects') {
+      const firstProjectCard = targetSection.querySelector('.project-card');
 
-    if (sectionKey === 'projects' && sectionHeader instanceof HTMLElement) {
-      const projectsHeaderTop = sectionHeader.getBoundingClientRect().top + window.scrollY;
-      const maxTopWithHeaderVisible = Math.max(0, projectsHeaderTop - topbarHeight - 14);
-      targetTop = Math.min(targetTop, maxTopWithHeaderVisible);
+      if (sectionHeader instanceof HTMLElement && firstProjectCard instanceof HTMLElement) {
+        const projectsHeaderTop = sectionHeader.getBoundingClientRect().top + window.scrollY;
+        const firstProjectCardBottom = firstProjectCard.getBoundingClientRect().bottom + window.scrollY;
+        const topMargin = topbarHeight + 18;
+        const bottomMargin = 24;
+
+        const minTopForCardVisible = clampTop(firstProjectCardBottom - (viewportHeight - bottomMargin));
+        const maxTopForHeaderVisible = clampTop(projectsHeaderTop - topMargin);
+
+        const projectsTargetTop = minTopForCardVisible <= maxTopForHeaderVisible
+          ? Math.round((minTopForCardVisible + maxTopForHeaderVisible) / 2)
+          : maxTopForHeaderVisible;
+
+        window.scrollTo({ top: projectsTargetTop, behavior });
+        window.history.replaceState(null, '', href);
+        return;
+      }
     }
+
+    const anchorElement = sectionHeader instanceof HTMLElement ? sectionHeader : targetSection;
+    const anchorTop = anchorElement.getBoundingClientRect().top + window.scrollY;
+    const availableViewport = Math.max(320, viewportHeight - topbarHeight);
+    const desiredAnchorY = topbarHeight + Math.round(availableViewport * 0.24);
+    const targetTop = clampTop(anchorTop - desiredAnchorY);
 
     window.scrollTo({ top: targetTop, behavior });
     window.history.replaceState(null, '', href);
