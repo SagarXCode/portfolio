@@ -54,7 +54,9 @@ function App() {
           <h1>Building software with clarity, consistency, and curiosity.</h1>
           <p className="lead">
             I focus on improving problem-solving skills, writing cleaner code, and growing through
-            practical projects as I progress in software development.
+            practical projects as I progress in software development. I am passionate about
+            software development, open source, and exploring how technology works at the system
+            level.
           </p>
 
           <div className="hero-actions">
