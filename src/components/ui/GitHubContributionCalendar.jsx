@@ -14,8 +14,30 @@ const getColorScheme = () => {
   return document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'light';
 };
 
+const getCalendarSize = () => {
+  if (typeof window === 'undefined') {
+    return { blockSize: 10, blockMargin: 3, fontSize: 12 };
+  }
+
+  const viewportWidth = window.innerWidth;
+  if (viewportWidth <= 420) {
+    return { blockSize: 5, blockMargin: 1, fontSize: 10 };
+  }
+
+  if (viewportWidth <= 700) {
+    return { blockSize: 6, blockMargin: 2, fontSize: 11 };
+  }
+
+  if (viewportWidth <= 980) {
+    return { blockSize: 8, blockMargin: 2, fontSize: 11 };
+  }
+
+  return { blockSize: 10, blockMargin: 3, fontSize: 12 };
+};
+
 export default function GitHubContributionCalendar({ username }) {
   const [colorScheme, setColorScheme] = useState(getColorScheme);
+  const [calendarSize, setCalendarSize] = useState(getCalendarSize);
 
   useEffect(() => {
     const root = document.documentElement;
@@ -33,6 +55,19 @@ export default function GitHubContributionCalendar({ username }) {
     };
   }, []);
 
+  useEffect(() => {
+    const updateCalendarSize = () => {
+      setCalendarSize(getCalendarSize());
+    };
+
+    updateCalendarSize();
+    window.addEventListener('resize', updateCalendarSize);
+
+    return () => {
+      window.removeEventListener('resize', updateCalendarSize);
+    };
+  }, []);
+
   return (
     <div className="contribution-calendar-shell">
       <div className="calendar-widget" role="img" aria-label={`GitHub contribution calendar for ${username}`}>
@@ -40,9 +75,9 @@ export default function GitHubContributionCalendar({ username }) {
           username={username}
           colorScheme={colorScheme}
           theme={calendarTheme}
-          blockSize={10}
-          blockMargin={3}
-          fontSize={12}
+          blockSize={calendarSize.blockSize}
+          blockMargin={calendarSize.blockMargin}
+          fontSize={calendarSize.fontSize}
           labels={{
             totalCount: '{{count}} contributions in the last year',
           }}

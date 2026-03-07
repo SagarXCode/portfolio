@@ -197,7 +197,7 @@ a {
     justify-content: center;
     padding: 0.22rem 0.5rem;
     border-radius: 999px;
-    color: var(--accent);
+    color: var(--text);
     font-size: 0.92rem;
     font-weight: 600;
     transition: color 0.2s ease;
@@ -214,13 +214,18 @@ a {
 }
 
 .topnav-link:hover {
-    color: var(--accent);
+    color: var(--text);
 }
 
 .topnav-link:focus-visible {
-    color: var(--accent);
+    color: var(--text);
     outline: 2px solid var(--accent);
     outline-offset: 2px;
+}
+
+:root[data-theme='dark'] .topnav-link:hover,
+:root[data-theme='dark'] .topnav-link:focus-visible {
+    color: var(--accent);
 }
 
 .nav-lift {
@@ -568,7 +573,9 @@ a {
 }
 
 .calendar-widget .react-activity-calendar__scroll-container {
-    overflow-x: hidden !important;
+    overflow-x: auto;
+    overflow-y: visible;
+    -ms-overflow-style: none;
     scrollbar-width: none;
 }
 
