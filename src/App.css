@@ -502,7 +502,7 @@ a {
     display: flex;
     justify-content: center;
     min-width: 0;
-    overflow: hidden;
+    overflow: visible;
 }
 
 .github-card {
