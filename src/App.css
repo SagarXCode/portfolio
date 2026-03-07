@@ -549,149 +549,60 @@ a {
 
 .contribution-calendar-shell {
     display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 0.75rem;
+    justify-content: center;
+    width: 100%;
 }
 
-.calendar-summary {
-    margin: 0;
+.calendar-widget {
+    width: min(100%, 860px);
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+}
+
+.calendar-widget .react-activity-calendar {
+    width: 100%;
+    max-width: 820px;
+    margin: 0 auto;
+    color: var(--muted);
+}
+
+.calendar-widget .react-activity-calendar__count {
+    margin: 0 0 0.7rem;
     color: var(--muted);
     font-size: 0.88rem;
     text-align: center;
 }
 
-.calendar-scroll {
-    overflow: hidden;
-    padding-bottom: 0;
-    max-width: 100%;
+.calendar-widget .react-activity-calendar svg {
+    width: 100%;
+    height: auto;
+    overflow: visible;
 }
 
-.calendar-inner {
-    width: fit-content;
-    min-width: fit-content;
-    margin: 0 auto;
+.calendar-widget .react-activity-calendar text {
+    fill: var(--muted);
+    font-size: 0.66rem;
 }
 
-.calendar-months {
-    display: flex;
-    align-items: center;
-    gap: 0.45rem;
-    margin-bottom: 0.35rem;
-}
-
-.calendar-month-spacer {
-    width: 1.7rem;
-    flex: 0 0 1.7rem;
-}
-
-.calendar-month-track {
-    display: flex;
-    gap: var(--cal-cell-gap);
-}
-
-.calendar-month-label {
-    width: var(--cal-cell-size);
+.calendar-widget .react-activity-calendar__footer {
+    margin-top: 0.65rem;
     color: var(--muted);
-    font-size: 0.69rem;
-    white-space: nowrap;
-    letter-spacing: 0.03em;
-}
-
-.calendar-body {
-    display: flex;
-    gap: 0.45rem;
-}
-
-.calendar-weekday-labels {
-    width: 1.7rem;
-    flex: 0 0 1.7rem;
-    display: grid;
-    grid-template-rows: repeat(7, var(--cal-cell-size));
-    gap: var(--cal-cell-gap);
-}
-
-.calendar-weekday-labels span {
-    font-size: 0.67rem;
-    color: var(--muted);
-    line-height: var(--cal-cell-size);
-}
-
-.calendar-grid {
-    display: flex;
-    gap: var(--cal-cell-gap);
-}
-
-.calendar-week {
-    display: grid;
-    grid-template-rows: repeat(7, var(--cal-cell-size));
-    gap: var(--cal-cell-gap);
-}
-
-.calendar-cell {
-    width: var(--cal-cell-size);
-    height: var(--cal-cell-size);
-    border-radius: 2px;
-    background: var(--cal-empty);
-    border: 1px solid transparent;
-    display: block;
-    position: relative;
-    transition: transform 0.16s ease, filter 0.16s ease, border-color 0.16s ease;
-}
-
-.calendar-cell.level-0 {
-    background: var(--cal-empty);
-}
-
-.calendar-cell.level-1 {
-    background: var(--cal-level-1);
-}
-
-.calendar-cell.level-2 {
-    background: var(--cal-level-2);
-}
-
-.calendar-cell.level-3 {
-    background: var(--cal-level-3);
-}
-
-.calendar-cell.level-4 {
-    background: var(--cal-level-4);
-}
-
-.calendar-cell.is-future {
-    opacity: 0.45;
-}
-
-.calendar-cell:hover {
-    transform: translateY(-2px);
-    filter: brightness(1.08);
-    border-color: rgba(255, 255, 255, 0.45);
-}
-
-.calendar-cell.is-future:hover {
-    transform: none;
-    filter: none;
-}
-
-.calendar-legend {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.45rem;
-    color: var(--muted);
-    font-size: 0.72rem;
     justify-content: center;
 }
 
-.legend-scale {
-    display: inline-flex;
-    gap: 0.2rem;
+.calendar-widget .react-activity-calendar rect {
+    rx: 2px;
+    transition: transform 0.16s ease, filter 0.16s ease, stroke 0.16s ease;
+    transform-box: fill-box;
+    transform-origin: center;
 }
 
-.calendar-error {
-    margin: 0;
-    color: #b25252;
-    font-size: 0.82rem;
+.calendar-widget .react-activity-calendar rect:hover {
+    transform: translateY(-2px);
+    filter: brightness(1.08);
+    stroke: rgba(255, 255, 255, 0.45);
+    stroke-width: 0.5px;
 }
 
 .contact-card {
@@ -935,23 +846,16 @@ a {
         width: 100%;
     }
 
-    .calendar-month-spacer,
-    .calendar-weekday-labels {
-        width: 1.2rem;
-        flex-basis: 1.2rem;
+    .calendar-widget {
+        width: 100%;
     }
 
-    .calendar-weekday-labels span {
-        font-size: 0.63rem;
+    .calendar-widget .react-activity-calendar {
+        max-width: 100%;
     }
 }
 
 @media (max-width: 700px) {
-    :root {
-        --cal-cell-size: 5px;
-        --cal-cell-gap: 1px;
-    }
-
     .topbar-inner {
         flex-wrap: wrap;
         gap: 0.65rem;
@@ -1027,14 +931,13 @@ a {
         width: 100%;
         justify-content: center;
     }
+
+    .calendar-widget .react-activity-calendar text {
+        font-size: 0.56rem;
+    }
 }
 
 @media (max-width: 520px) {
-    :root {
-        --cal-cell-size: 4px;
-        --cal-cell-gap: 1px;
-    }
-
     .topbar-inner {
         padding: 0.72rem 0.8rem;
     }
@@ -1088,14 +991,12 @@ a {
         line-height: 1.64;
     }
 
-    .calendar-month-spacer,
-    .calendar-weekday-labels {
-        width: 1rem;
-        flex-basis: 1rem;
+    .calendar-widget .react-activity-calendar {
+        font-size: 0.8rem;
     }
 
-    .calendar-weekday-labels span {
-        font-size: 0.56rem;
+    .calendar-widget .react-activity-calendar__count {
+        font-size: 0.8rem;
     }
 }
 
