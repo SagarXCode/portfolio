@@ -162,14 +162,12 @@ a {
 }
 
 .nav-lift {
-    transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease, color 0.2s ease;
+    transition: transform 0.2s ease, color 0.2s ease;
 }
 
 .nav-lift:hover,
 .nav-lift:focus-visible {
     transform: translateY(-4px);
-    box-shadow: 0 18px 28px -24px var(--shadow-color);
-    background: var(--surface-strong);
 }
 
 .theme-toggle {
