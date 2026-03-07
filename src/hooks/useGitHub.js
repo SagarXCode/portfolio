@@ -1,22 +1,13 @@
 import { useEffect, useMemo, useState } from 'react';
 
-const contributionEndpoint =
-	(username) => `https://github-contributions-api.deno.dev/${username}.json`;
-
-const dateKeyPattern = /(\d{4}-\d{2}-\d{2})/;
-
-const toUtcDateKey = (date) => date.toISOString().slice(0, 10);
+const contributionEndpoints = [
+	(username) => `https://github-contributions-api.jogruber.de/v4/${username}?y=last`,
+	(username) => `https://github-contributions-api.deno.dev/${username}.json`,
+];
 
 const normalizeDateKey = (input) => {
 	if (!input) {
 		return null;
-	}
-
-	if (typeof input === 'string') {
-		const match = input.match(dateKeyPattern);
-		if (match) {
-			return match[1];
-		}
 	}
 
 	const normalized = new Date(input);
@@ -24,24 +15,7 @@ const normalizeDateKey = (input) => {
 		return null;
 	}
 
-	return toUtcDateKey(normalized);
-};
-
-const readEntriesFromWeeks = (weeks) => {
-	if (!Array.isArray(weeks)) {
-		return [];
-	}
-
-	const entries = [];
-
-	weeks.forEach((week) => {
-		const days = week?.contributionDays ?? week?.days ?? week?.contributions;
-		if (Array.isArray(days)) {
-			entries.push(...days);
-		}
-	});
-
-	return entries;
+	return normalized.toISOString().slice(0, 10);
 };
 
 const readContributionEntries = (payload) => {
@@ -49,15 +23,7 @@ const readContributionEntries = (payload) => {
 		return [];
 	}
 
-	if (Array.isArray(payload.weeks)) {
-		return readEntriesFromWeeks(payload.weeks);
-	}
-
 	if (Array.isArray(payload.contributions)) {
-		if (payload.contributions.some((entry) => Array.isArray(entry?.contributionDays))) {
-			return readEntriesFromWeeks(payload.contributions);
-		}
-
 		return payload.contributions;
 	}
 
@@ -78,17 +44,16 @@ const normalizeContributions = (payload) => {
 
 	entries.forEach((entry) => {
 		const dateKey = normalizeDateKey(
-			entry.date ?? entry.day ?? entry.timestamp ?? entry.contributed_at ?? entry.occurredAt,
+			entry.date ?? entry.day ?? entry.timestamp ?? entry.contributed_at,
 		);
 		const rawCount =
-			entry.contributionCount ??
 			entry.count ??
-			entry.contributions ??
 			entry.value ??
+			entry.contributionCount ??
+			entry.contributions ??
 			entry.total ??
 			0;
 		const parsedCount = Number.parseInt(rawCount, 10);
-		const color = typeof entry.color === 'string' ? entry.color : null;
 
 		if (!dateKey || Number.isNaN(parsedCount)) {
 			return;
@@ -97,7 +62,6 @@ const normalizeContributions = (payload) => {
 		normalized.push({
 			date: dateKey,
 			count: Math.max(0, parsedCount),
-			color,
 		});
 	});
 
@@ -123,26 +87,25 @@ export const useGitHubContributions = (username) => {
 			setLoading(true);
 			setError('');
 
-			try {
-				const response = await fetch(contributionEndpoint(username), { signal: controller.signal });
-				if (!response.ok) {
-					setContributions([]);
-					setError('Unable to load GitHub contributions right now.');
-					setLoading(false);
-					return;
-				}
+			for (const endpoint of contributionEndpoints) {
+				try {
+					const response = await fetch(endpoint(username), { signal: controller.signal });
+					if (!response.ok) {
+						continue;
+					}
 
-				const payload = await response.json();
-				const normalizedData = normalizeContributions(payload);
+					const payload = await response.json();
+					const normalizedData = normalizeContributions(payload);
 
-				if (normalizedData.length > 0) {
-					setContributions(normalizedData);
-					setLoading(false);
-					return;
-				}
-			} catch (requestError) {
-				if (requestError.name === 'AbortError') {
-					return;
+					if (normalizedData.length > 0) {
+						setContributions(normalizedData);
+						setLoading(false);
+						return;
+					}
+				} catch (requestError) {
+					if (requestError.name === 'AbortError') {
+						return;
+					}
 				}
 			}
 
@@ -168,18 +131,6 @@ export const useGitHubContributions = (username) => {
 		return map;
 	}, [contributions]);
 
-	const contributionColorMap = useMemo(() => {
-		const map = new Map();
-
-		contributions.forEach((item) => {
-			if (item.color) {
-				map.set(item.date, item.color);
-			}
-		});
-
-		return map;
-	}, [contributions]);
-
 	const maxCount = useMemo(() => {
 		if (contributions.length === 0) {
 			return 0;
@@ -198,7 +149,6 @@ export const useGitHubContributions = (username) => {
 
 	return {
 		contributionMap,
-		contributionColorMap,
 		maxCount,
 		totalCount,
 		loading,
