@@ -1,4 +1,5 @@
 const links = [
+  { href: '#home', label: 'Home' },
   { href: '#projects', label: 'Projects' },
   { href: '#skills', label: 'Skills' },
   { href: '#github', label: 'GitHub' },
@@ -7,6 +8,14 @@ const links = [
 
 export default function Navbar({ theme, onToggleTheme }) {
   const handleBrandClick = () => {
+    const homeSection = document.getElementById('home');
+
+    if (homeSection) {
+      homeSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      window.history.replaceState(null, '', '#home');
+      return;
+    }
+
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
@@ -20,8 +29,11 @@ export default function Navbar({ theme, onToggleTheme }) {
             type="button"
             className="brand brand-button nav-lift"
             onClick={handleBrandClick}
+            aria-label="Sagar Maurya"
           >
-            Sagar Maurya
+            <span className="brand-bracket" aria-hidden="true">&lt;</span>
+            <span className="brand-name">Sagar Maurya</span>
+            <span className="brand-bracket brand-bracket-close" aria-hidden="true"> /&gt;</span>
           </button>
         </div>
 

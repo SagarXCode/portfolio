@@ -122,10 +122,12 @@ function App() {
           </header>
 
           <div className="github-stats-grid">
-            <article className="github-card calendar-card reveal" style={{ animationDelay: '0.35s' }}>
-              <h3>GitHub Contribution Calendar</h3>
-              <GitHubContributionCalendar username={GITHUB_USERNAME} />
-            </article>
+            <div className="activity-card-wrap reveal" style={{ animationDelay: '0.35s' }}>
+              <article className="github-card calendar-card activity-card">
+                <h3>GitHub Contributions</h3>
+                <GitHubContributionCalendar username={GITHUB_USERNAME} />
+              </article>
+            </div>
           </div>
         </section>
 
