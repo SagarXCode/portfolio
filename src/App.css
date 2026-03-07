@@ -375,9 +375,7 @@ a {
 
 .github-stats-grid {
     margin-top: 1.1rem;
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 1rem;
+    display: flex;
 }
 
 .github-card {
@@ -395,15 +393,9 @@ a {
     text-transform: uppercase;
 }
 
-.github-card.stats-card {
-    max-width: 460px;
-}
-
-.github-card.wide {
-    grid-column: 1 / -1;
-    width: 100%;
-    max-width: 860px;
-    justify-self: center;
+.github-card.calendar-card {
+    width: fit-content;
+    max-width: 100%;
 }
 
 .github-image-wrap {
@@ -440,6 +432,7 @@ a {
     overflow-x: auto;
     overflow-y: visible;
     padding-bottom: 0.25rem;
+    max-width: 100%;
 }
 
 .calendar-inner {
@@ -684,16 +677,8 @@ a {
         grid-template-columns: 1fr;
     }
 
-    .github-stats-grid {
-        grid-template-columns: 1fr;
-    }
-
-    .github-card.stats-card {
-        max-width: none;
-    }
-
-    .github-card.wide {
-        grid-column: auto;
+    .github-card.calendar-card {
+        width: 100%;
     }
 
     .calendar-month-spacer,

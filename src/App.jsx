@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
 import Navbar from './components/layout/Navbar';
 import Footer from './components/layout/Footer';
 import ProjectCard from './components/ui/ProjectCard';
@@ -39,10 +39,6 @@ function App() {
     document.documentElement.setAttribute('data-theme', theme);
     window.localStorage.setItem('theme', theme);
   }, [theme]);
-
-  const githubStatsUrl = useMemo(() => {
-    return `https://github-profile-summary-cards.vercel.app/api/cards/stats?username=${GITHUB_USERNAME}`;
-  }, []);
 
   const handleThemeToggle = () => {
     setTheme((currentTheme) => (currentTheme === 'light' ? 'dark' : 'light'));
@@ -120,23 +116,11 @@ function App() {
         <section id="github" className="section reveal" style={{ animationDelay: '0.26s' }}>
           <header className="section-header">
             <h2>GitHub Activity</h2>
-            <p>Live stats and contribution calendar from my GitHub profile.</p>
+            <p>Live contribution calendar from my GitHub profile.</p>
           </header>
 
           <div className="github-stats-grid">
-            <article className="github-card stats-card reveal" style={{ animationDelay: '0.35s' }}>
-              <h3>GitHub Stats</h3>
-              <div className="github-image-wrap">
-                <img
-                  className="github-image"
-                  src={githubStatsUrl}
-                  alt={`${GITHUB_USERNAME} GitHub statistics`}
-                  loading="lazy"
-                />
-              </div>
-            </article>
-
-            <article className="github-card wide reveal" style={{ animationDelay: '0.42s' }}>
+            <article className="github-card calendar-card reveal" style={{ animationDelay: '0.35s' }}>
               <h3>GitHub Contribution Calendar</h3>
               <GitHubContributionCalendar username={GITHUB_USERNAME} />
             </article>
