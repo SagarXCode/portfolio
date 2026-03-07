@@ -7,9 +7,19 @@ const links = [
 ];
 
 export default function Navbar({ theme, onToggleTheme }) {
+  const getScrollBehavior = () => {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      return 'auto';
+    }
+
+    return 'smooth';
+  };
+
   const scrollToSection = (href) => {
+    const behavior = getScrollBehavior();
+
     if (href === '#home') {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+      window.scrollTo({ top: 0, behavior });
       window.history.replaceState(null, '', window.location.pathname + window.location.search);
       return;
     }
@@ -21,12 +31,21 @@ export default function Navbar({ theme, onToggleTheme }) {
 
     const topbar = document.querySelector('.topbar');
     const topbarHeight = topbar instanceof HTMLElement ? topbar.offsetHeight : 0;
-    const offsetFactor = href === '#projects' ? 0.24 : 0.2;
-    const visualOffset = Math.min(240, Math.max(92, Math.round(window.innerHeight * offsetFactor)));
-    const sectionTop = targetSection.getBoundingClientRect().top + window.scrollY;
-    const targetTop = Math.max(0, sectionTop - topbarHeight - visualOffset);
+    const sectionHeader = targetSection.querySelector('.section-header');
+    const anchorElement = sectionHeader instanceof HTMLElement ? sectionHeader : targetSection;
 
-    window.scrollTo({ top: targetTop, behavior: 'smooth' });
+    const anchorTop = anchorElement.getBoundingClientRect().top + window.scrollY;
+    const viewportHeight = window.innerHeight;
+    const availableViewport = Math.max(320, viewportHeight - topbarHeight);
+    const visualOffset = Math.round(availableViewport * 0.24);
+
+    const maxScrollableTop = Math.max(0, document.documentElement.scrollHeight - viewportHeight);
+    const targetTop = Math.min(
+      maxScrollableTop,
+      Math.max(0, anchorTop - topbarHeight - visualOffset),
+    );
+
+    window.scrollTo({ top: targetTop, behavior });
     window.history.replaceState(null, '', href);
   };
 
