@@ -4,20 +4,8 @@ import Footer from './components/layout/Footer';
 import ProjectCard from './components/ui/ProjectCard';
 import SkillBadge from './components/ui/SkillBadge';
 import GitHubContributionCalendar from './components/ui/GitHubContributionCalendar';
-import { projects } from './data/projects';
-
-const skills = [
-  'Java',
-  'Data Structures',
-  'Algorithms',
-  'Problem Solving',
-  'Spring Boot',
-  'Git',
-  'GitHub',
-  'SQL',
-];
-
-const GITHUB_USERNAME = 'SagarXCode';
+import { GITHUB_USERNAME, skills } from './utils/constants';
+import { projects } from './utils/projects';
 
 const getInitialTheme = () => {
   if (typeof window === 'undefined') {
