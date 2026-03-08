@@ -2,7 +2,6 @@ const links = [
   { href: '#home', label: 'Home' },
   { href: '#projects', label: 'Projects' },
   { href: '#skills', label: 'Skills' },
-  { href: '#github', label: 'GitHub' },
   { href: '#contact', label: 'Contact' },
 ];
 
