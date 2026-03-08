@@ -176,7 +176,19 @@ function App() {
           </div>
         </section>
 
-        <section id="contact" className="section reveal" style={{ animationDelay: '0.3s' }}>
+        <section id="education" className="section reveal" style={{ animationDelay: '0.28s' }}>
+          <header className="section-header">
+            <h2>Education</h2>
+          </header>
+
+          <article className="education-card activity-card reveal" style={{ animationDelay: '0.37s' }}>
+            <p className="education-degree">Bachelor of Technology in Computer Science Engineering</p>
+            <p className="education-school">Institute of Technology and Management GIDA, Gorakhpur</p>
+            <p className="education-years">2023 - 2027</p>
+          </article>
+        </section>
+
+        <section id="contact" className="section reveal" style={{ animationDelay: '0.32s' }}>
           <header className="section-header">
             <h2>Contact</h2>
             <p>Let us collaborate on your next web project.</p>

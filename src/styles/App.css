@@ -624,6 +624,42 @@ a {
     stroke-width: 0.5px;
 }
 
+.education-card {
+    margin-top: 1.1rem;
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    background: linear-gradient(145deg, var(--surface) 0%, var(--surface-alt) 100%);
+    padding: 1.1rem 1.2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.36rem;
+}
+
+.education-degree {
+    margin: 0;
+    color: var(--text);
+    font-family: 'Space Grotesk', 'Segoe UI', sans-serif;
+    font-size: clamp(1.08rem, 2vw, 1.22rem);
+    letter-spacing: -0.015em;
+    font-weight: 700;
+}
+
+.education-school {
+    margin: 0;
+    color: var(--muted);
+    font-size: 0.97rem;
+    font-weight: 600;
+}
+
+.education-years {
+    margin: 0.12rem 0 0;
+    color: var(--accent);
+    font-size: 0.84rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+}
+
 .contact-card {
     margin-top: 1.1rem;
     border: 1px solid var(--line);
@@ -755,6 +791,7 @@ a {
 
     .project-card,
     .contact-card,
+    .education-card,
     .github-card {
         padding: 0.95rem;
     }
