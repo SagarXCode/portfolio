@@ -138,7 +138,8 @@ a {
 
 .brand-bracket {
     color: var(--accent);
-    font-weight: 800;
+    font-weight: 900;
+    font-size: 1.08em;
     opacity: 0.92;
 }
 
