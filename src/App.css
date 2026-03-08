@@ -61,6 +61,8 @@ html {
 
 body {
     margin: 0;
+    padding: 0.28rem;
+    border: 1px solid var(--line);
     font-family: 'Manrope', 'Segoe UI', sans-serif;
     color: var(--text);
     background:
@@ -68,6 +70,8 @@ body {
         radial-gradient(circle at 100% 100%, var(--bg-spot-2) 0%, transparent 36%),
         var(--bg);
     min-height: 100vh;
+    user-select: none;
+    -webkit-user-select: none;
     transition: background-color 0.25s ease, color 0.25s ease;
 }
 
@@ -138,7 +142,7 @@ a {
 
 .brand-bracket {
     color: var(--accent);
-    font-weight: 700;
+    font-weight: 800;
     opacity: 0.92;
 }
 
@@ -498,7 +502,7 @@ a {
 }
 
 .activity-card-wrap {
-    width: min(100%, 1040px);
+    width: min(100%, 1000px);
     display: flex;
     justify-content: center;
     min-width: 0;
@@ -521,10 +525,10 @@ a {
 }
 
 .github-card.calendar-card {
-    width: min(100%, 1020px);
+    width: min(100%, 970px);
     max-width: 100%;
     min-width: 0;
-    padding: 1rem 0.8rem 1.05rem;
+    padding: 0.92rem 0.72rem 0.98rem;
     overflow: hidden;
     margin-inline: auto;
 }
