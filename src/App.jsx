@@ -95,13 +95,12 @@ function App() {
 
       <main className="main-content">
         <section id="home" className="hero reveal" style={{ animationDelay: '0.05s' }}>
-          <p className="eyebrow">Aspiring Software Developer | Java | Learning Data Structures & Algorithms.</p>
+          <p className="eyebrow">Aspiring Software Developer | Java | Data Structures & Algorithms</p>
           <h1>Building software with clarity, consistency, and curiosity.</h1>
           <p className="lead">
-            I focus on improving problem-solving skills, writing cleaner code, and growing through
-            practical projects as I progress in software development. I am passionate about
-            software development, open source, and exploring how technology works at the system
-            level.
+            I'm a Computer Science student focused on strengthening problem-solving skills, writing
+            clean and maintainable code, and building practical projects. I'm also interested in
+            open-source development and exploring how technology works at the system level.
           </p>
 
           <div className="hero-actions">
