@@ -2,7 +2,6 @@
 
 :root {
     --bg: #f6f3ee;
-    --bg-accent: #edf5f2;
     --surface: #fffefc;
     --surface-alt: #fbf8f3;
     --surface-strong: #ffffff;
@@ -20,16 +19,11 @@
     --cal-level-2: #7bc96f;
     --cal-level-3: #239a3b;
     --cal-level-4: #196127;
-    --tooltip-bg: #1f2933;
-    --tooltip-text: #ffffff;
-    --cal-cell-size: 9px;
-    --cal-cell-gap: 2px;
     --max-width: 1080px;
 }
 
 :root[data-theme='dark'] {
     --bg: #10161d;
-    --bg-accent: #18232d;
     --surface: #17212c;
     --surface-alt: #1b2632;
     --surface-strong: #202d3a;
@@ -47,8 +41,6 @@
     --cal-level-2: #18794e;
     --cal-level-3: #2ea043;
     --cal-level-4: #56d364;
-    --tooltip-bg: #e4ebf2;
-    --tooltip-text: #10161d;
 }
 
 * {
@@ -550,24 +542,6 @@ a {
 
 .activity-card h3 {
     color: var(--accent);
-}
-
-.github-image-wrap {
-    border: 1px solid var(--line);
-    border-radius: 12px;
-    background: var(--surface-strong);
-    overflow: hidden;
-    padding: 0.35rem;
-    max-width: 420px;
-}
-
-.github-image {
-    width: 100%;
-    max-width: 100%;
-    height: auto;
-    display: block;
-    object-fit: contain;
-    border-radius: 8px;
 }
 
 .contribution-calendar-shell {
