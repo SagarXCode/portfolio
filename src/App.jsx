@@ -182,7 +182,7 @@ function App() {
 
           <article className="education-card activity-card reveal" style={{ animationDelay: '0.37s' }}>
             <p className="education-degree">Bachelor of Technology in Computer Science Engineering</p>
-            <p className="education-school">Institute of Technology and Management GIDA, Gorakhpur</p>
+            <p className="education-school">Institute of Technology and Management, GIDA, Gorakhpur</p>
             <p className="education-years">2023 - 2027</p>
           </article>
         </section>
