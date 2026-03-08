@@ -138,9 +138,14 @@ a {
 
 .brand-bracket {
     color: var(--accent);
+    font-family: 'Segoe UI Black', 'Arial Black', 'Manrope', sans-serif;
     font-weight: 900;
-    font-size: 1.08em;
-    opacity: 0.92;
+    font-size: 1.2em;
+    line-height: 1;
+    letter-spacing: -0.03em;
+    -webkit-text-stroke: 0.32px currentColor;
+    text-shadow: 0.02em 0 currentColor;
+    opacity: 0.98;
 }
 
 .brand-bracket-close {
