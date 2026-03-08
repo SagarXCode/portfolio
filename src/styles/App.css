@@ -143,6 +143,10 @@ a {
     opacity: 0.92;
 }
 
+.brand-bracket:not(.brand-bracket-close) {
+    margin-right: 0.22ch;
+}
+
 .brand-bracket-close {
     margin-left: 0;
 }
