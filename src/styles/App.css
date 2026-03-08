@@ -20,6 +20,10 @@
     --cal-level-3: #239a3b;
     --cal-level-4: #196127;
     --max-width: 1080px;
+    --frame-gap: 0.28rem;
+    --gutter-lg: 1.2rem;
+    --gutter-md: 1rem;
+    --gutter-sm: 0.95rem;
 }
 
 :root[data-theme='dark'] {
@@ -53,7 +57,7 @@ html {
 
 body {
     margin: 0;
-    padding: 0.28rem;
+    padding: var(--frame-gap);
     border: 1px solid var(--line);
     font-family: 'Manrope', 'Segoe UI', sans-serif;
     color: var(--text);
@@ -94,7 +98,7 @@ a {
 .topbar-inner {
     max-width: var(--max-width);
     margin: 0 auto;
-    padding: 0.95rem 1.2rem;
+    padding: 0.95rem var(--gutter-lg);
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -303,7 +307,7 @@ a {
 .main-content {
     max-width: var(--max-width);
     margin: 0 auto;
-    padding: 2.5rem 1.2rem 0.5rem;
+    padding: 2.5rem var(--gutter-lg) 0.5rem;
 }
 
 .hero {
@@ -663,6 +667,15 @@ a {
         0 0 24px rgba(126, 192, 187, 0.2);
 }
 
+@media (hover: none) and (pointer: coarse) and (min-width: 760px) {
+    :root {
+        --frame-gap: 0.48rem;
+        --gutter-lg: clamp(1.5rem, 4.6vw, 2.4rem);
+        --gutter-md: clamp(1.28rem, 3.9vw, 2.1rem);
+        --gutter-sm: clamp(1.12rem, 3.3vw, 1.75rem);
+    }
+}
+
 @media (hover: none) and (pointer: coarse) {
 
     .project-card:active,
@@ -698,11 +711,11 @@ a {
 
 @media (max-width: 1024px) {
     .topbar-inner {
-        padding: 0.9rem 1rem;
+        padding: 0.9rem var(--gutter-md);
     }
 
     .main-content {
-        padding: 2.2rem 1rem 0.45rem;
+        padding: 2.2rem var(--gutter-md) 0.45rem;
     }
 
     .section {
@@ -793,7 +806,7 @@ a {
 }
 
 .site-footer {
-    padding: 1.4rem 1.2rem 2rem;
+    padding: 1.4rem var(--gutter-lg) 2rem;
 }
 
 .footer-inner {
@@ -909,7 +922,11 @@ a {
     }
 
     .main-content {
-        padding: 2rem 0.95rem 0.4rem;
+        padding: 2rem var(--gutter-sm) 0.4rem;
+    }
+
+    .site-footer {
+        padding-inline: var(--gutter-sm);
     }
 
     .section {
@@ -962,7 +979,7 @@ a {
 
 @media (max-width: 520px) {
     .topbar-inner {
-        padding: 0.72rem 0.8rem;
+        padding: 0.72rem var(--gutter-sm);
     }
 
     .brand {
