@@ -22,6 +22,7 @@ const getInitialTheme = () => {
 
 function App() {
   const [theme, setTheme] = useState(getInitialTheme);
+  const resumeUrl = `${import.meta.env.BASE_URL}assets/resume/resume.pdf`;
 
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', theme);
@@ -107,7 +108,7 @@ function App() {
             <a
               className="btn btn-resume reveal reveal-button"
               style={{ animationDelay: '0.12s' }}
-              href="/assets/resume/resume.pdf"
+              href={resumeUrl}
               target="_blank"
               rel="noopener noreferrer"
             >
