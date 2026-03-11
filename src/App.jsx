@@ -105,6 +105,19 @@ function App() {
 
           <div className="hero-actions">
             <a
+              className="btn btn-resume reveal reveal-button"
+              style={{ animationDelay: '0.12s' }}
+              href="/assets/resume/resume.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <svg className="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                <path d="M12 15V3m0 12-4-4m4 4 4-4" />
+                <path d="M2 17l.621 2.485A2 2 0 0 0 4.561 21h14.878a2 2 0 0 0 1.94-1.515L22 17" />
+              </svg>
+              Resume
+            </a>
+            <a
               className="btn btn-primary reveal reveal-button"
               style={{ animationDelay: '0.18s' }}
               href="#projects"

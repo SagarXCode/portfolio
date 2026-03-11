@@ -17,6 +17,10 @@ const ProjectCard = ({ project }) => {
       {hasLink ? (
         <a href={project.link} className="project-link" target="_blank" rel="noreferrer">
           View project
+          <svg className="project-link-arrow" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+            <path d="M3 8h10" />
+            <path d="M9 4l4 4-4 4" />
+          </svg>
         </a>
       ) : (
         <span className="project-link muted">Private or in progress</span>

@@ -384,6 +384,34 @@ a {
     background: #fff;
 }
 
+.btn-resume {
+    background: var(--accent-soft);
+    border-color: var(--accent);
+    color: var(--accent);
+    gap: 0.42rem;
+}
+
+.btn-resume:hover {
+    background: var(--accent);
+    color: #f7fffe;
+}
+
+:root[data-theme='dark'] .btn-ghost {
+    background: rgba(255, 255, 255, 0.06);
+}
+
+:root[data-theme='dark'] .btn-ghost:hover {
+    background: rgba(255, 255, 255, 0.12);
+}
+
+.btn-icon {
+    width: 1rem;
+    height: 1rem;
+    flex: 0 0 auto;
+    display: block;
+    transition: color 0.2s ease;
+}
+
 .section {
     padding: 2.6rem 0;
     border-bottom: 1px solid var(--line);
@@ -477,10 +505,21 @@ a {
     color: var(--accent);
     font-weight: 700;
     font-size: 0.84rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.28rem;
+    transition: gap 0.18s ease;
 }
 
 .project-link:hover {
     text-decoration: underline;
+    gap: 0.46rem;
+}
+
+.project-link-arrow {
+    width: 0.88rem;
+    height: 0.88rem;
+    flex: 0 0 auto;
 }
 
 .project-link.muted {
@@ -833,18 +872,30 @@ a {
     width: 1.22rem;
     height: 1.22rem;
     border-radius: 999px;
-    background: #ffffff;
+    background: var(--accent-soft);
     display: inline-flex;
     align-items: center;
     justify-content: center;
     flex: 0 0 auto;
+    transition: background 0.2s ease;
 }
 
 .contact-link-icon {
     width: 0.78rem;
     height: 0.78rem;
-    color: #111111;
+    color: var(--accent);
     display: block;
+    transition: color 0.2s ease;
+}
+
+.contact-link:hover .contact-link-icon-wrap,
+.contact-link:focus-visible .contact-link-icon-wrap {
+    background: var(--accent);
+}
+
+.contact-link:hover .contact-link-icon,
+.contact-link:focus-visible .contact-link-icon {
+    color: #f7fffe;
 }
 
 .site-footer {
