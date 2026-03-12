@@ -245,6 +245,24 @@ function App() {
                   <span>LinkedIn</span>
                 </a>
               </div>
+
+              <div className="reveal reveal-button" style={{ animationDelay: '0.18s' }}>
+                <a
+                  className="text-link contact-link nav-lift"
+                  href={resumeUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Resume download"
+                >
+                  <span className="contact-link-icon-wrap" aria-hidden="true">
+                    <svg className="contact-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M12 15V3m0 12-4-4m4 4 4-4" />
+                      <path d="M2 17l.621 2.485A2 2 0 0 0 4.561 21h14.878a2 2 0 0 0 1.94-1.515L22 17" />
+                    </svg>
+                  </span>
+                  <span>Resume</span>
+                </a>
+              </div>
             </div>
           </div>
         </section>
